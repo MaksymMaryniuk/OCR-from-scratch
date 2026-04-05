@@ -5,6 +5,10 @@ public class Layer
     public double[,] Weights { get; set; }
     public double[] Biases { get; set; }
     public double[,] Output { get; set; }
+    public double[,] Input { get; set; }
+    public double[,] dWeights { get; set; }
+    public double[] dBiases { get; set; }
+
     private Random rand = new Random();
     public Layer(int num_inputs, int num_neurons)
     {
@@ -16,9 +20,42 @@ public class Layer
     }
     public void Forward(double[,] X)
     {
-        Output = Matrix_Multiplier(X, Weights, Biases);
-    }
+        Input = X;
+        Output = Matrix_Multiplier(X, Weights);
 
+        for (int i = 0; i < Output.GetLength(0); i++)
+        {
+            for (int j = 0; j < Output.GetLength(1); j++)
+            {
+                Output[i, j] += Biases[j];
+            }
+        }
+    }
+    public double[,] Backward(double[,] dZ)
+    {
+        /*operations: dW = X^T * dZ
+                   db = sum(dZ)
+                   dX = dZ * W^T
+         where X - inputs, dZ - grad due to output layer, W - weights of layer,
+         dW - grad due to weights,
+         db - grad due to biases,
+         dX - grad due to inputs
+        */
+
+        dWeights = Matrix_Multiplier(Transpose(Input), dZ);
+        dBiases = new double[dZ.GetLength(1)];
+
+        for (int i = 0; i < dZ.GetLength(0); i++)
+        {
+            for (int j = 0; j < dZ.GetLength(1); j++)
+            {
+                dBiases[j] += dZ[i, j];
+            }
+        }
+
+        double[,] dX = Matrix_Multiplier(dZ, Transpose(Weights));
+        return dX;
+    }
 
     private void Matrix_filler(double[,] value)
     {
@@ -39,7 +76,7 @@ public class Layer
         }
     }
 
-    private double[,] Matrix_Multiplier(double[,] matrix1, double[,] matrix2, double[] bias)
+    private double[,] Matrix_Multiplier(double[,] matrix1, double[,] matrix2)
     {
         int output_rows = matrix1.GetLength(0);
         int output_cols = matrix2.GetLength(1);
@@ -54,10 +91,25 @@ public class Layer
                 {
                     sum += matrix1[rows, common] * matrix2[common, cols];
                 }
-                output[rows, cols] = sum + bias[cols];
+                output[rows, cols] = sum;
             }
         }
         return output;
+    }
+
+    private double[,] Transpose(double[,] matrix)
+    {
+        int rows = matrix.GetLength(0);
+        int cols = matrix.GetLength(1);
+        double[,] transposed = new double[cols, rows];
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                transposed[j, i] = matrix[i, j];
+            }
+        }
+        return transposed;
     }
 }
 

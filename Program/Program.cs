@@ -4,10 +4,11 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        // Model training example with 2 samples, 3 features, and 3 classes for classification (Random values)
         int rows = 2;
-        int cols = 4;
-        double min = 4.0;
-        double max = 7.0;
+        int cols = 3;
+        double min = -10.0;
+        double max = 100.0;
         double[,] matrix = new double[rows, cols];
 
         Random rand = new Random();
@@ -21,32 +22,50 @@ internal class Program
                 matrix[i, j] = Math.Round(val, 2);
             }
         }
-        Console.WriteLine("------Basic Inputs (X)------");
-        PrintMatrix(matrix);
-        Console.WriteLine("----------------------------");
 
-        Model.Layer layer1 = new Model.Layer(4, 5);
-        Model.Layer layer2 = new Model.Layer(5, 1);
+        
+        int epochs = 1000;
 
-        Console.WriteLine("------Weights------");
-        PrintMatrix(layer1.Weights);
-        Console.WriteLine("----------------------------");
+        double[,] y_true = { { 0, 1, 0 }, { 1, 0, 0 } };
 
-        Console.WriteLine("------Biases------");
-        for (int i = 0; i < layer1.Biases.Length; i++)
+
+        Model.Layer layer1 = new Model.Layer(cols, 5);
+        Model.Layer layer2 = new Model.Layer(5, 3);
+        Model.ActivationReLU relu = new Model.ActivationReLU();
+        Model.ActivationSoftmax softmax = new Model.ActivationSoftmax(); 
+        Model.LossCCE loss = new Model.LossCCE();
+        Model.Optimizer_SGD optimizer = new Model.Optimizer_SGD();
+
+        for (int epoch = 0; epoch < epochs; epoch++)
         {
-            Console.Write(Math.Round(layer1.Biases[i], 2) + "\t");
-        }
-        Console.WriteLine("\n----------------------------");
+            // 1. Forward
+            layer1.Forward(matrix);
+            relu.Forward(layer1.Output);
+            layer2.Forward(relu.Output);
+            softmax.Forward(layer2.Output);
 
-        layer1.Forward(matrix);
-        Console.WriteLine("------After forward------");
-        PrintMatrix(layer1.Output);
-        Console.WriteLine("----------------------------");
-        layer2.Forward(layer1.Output);
-        Console.WriteLine("------After forward 2------");
-        PrintMatrix(layer2.Output);
-        Console.WriteLine("----------------------------");
+            // 2. Loss
+            double lossValue = loss.Calculate(softmax.Output, y_true);
+
+            // 3. Backward
+            double[,] dZ = loss.Backward(softmax.Output, y_true);
+
+            dZ = layer2.Backward(dZ);
+            dZ = relu.Backward(dZ);
+            dZ = layer1.Backward(dZ);
+
+            // 4. Update
+            optimizer.Update(layer1);
+            optimizer.Update(layer2);
+
+            // logs
+            if (epoch % 100 == 0)
+            {
+                Console.WriteLine($"Epoch {epoch}, Loss: {lossValue}");
+                Console.WriteLine($"Accuracy: {PrintAccuracy(softmax.Output, y_true) * 100}%");
+            }
+        }
+
         void PrintMatrix(double[,] matrix)
         {
 
@@ -60,33 +79,31 @@ internal class Program
             }
 
         }
-        int pointsPerClass = 100;
-        int numClasses = 3;
-        var (X, y) = DataGenerator.CreateData(pointsPerClass, numClasses);
-        double[] xs = new double[pointsPerClass];
-        double[] ys = new double[pointsPerClass];
-
-
-        var plt = new ScottPlot.Plot();
-
-        plt.Title("Spiral Data (C# + ScottPlot)");
-
-        for (int c = 0; c < numClasses; c++)
+        double PrintAccuracy(double[,] softmax_output, double[,] target)
         {
-            for (int i = 0; i < pointsPerClass; i++)
+            int rows = softmax_output.GetLength(0);
+            int cols = softmax_output.GetLength(1);
+            double correct = 0;
+
+            for (int i = 0; i < rows; i++)
             {
-                int idx = c * pointsPerClass + i;
-                xs[i] = X[idx, 0];
-                ys[i] = X[idx, 1];
+                double maxVal = double.MinValue;
+                int predictedIndex = -1;
+                for (int j = 0; j < cols; j++)
+                {
+                    if (softmax_output[i, j] > maxVal)
+                    {
+                        maxVal = softmax_output[i, j];
+                        predictedIndex = j;
+                    }
+                }
+                if (target[i, predictedIndex] == 1.0)
+                {
+                    correct++;
+                }
             }
-            var scatter = plt.Add.Scatter(xs, ys);
-            scatter.LineWidth = 0; 
-            scatter.MarkerSize = 5;
-            Console.WriteLine(System.IO.Path.GetFullPath($"spiral_plot{c}.png"));
-            plt.SavePng($"spiral_plot{c}.png", 600, 600);
+
+            return correct / rows;
         }
-
-        plt.ShowLegend();
-
     }
 }
