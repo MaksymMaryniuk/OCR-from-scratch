@@ -1,12 +1,11 @@
-﻿using ScottPlot;
-using Model;
+﻿using Model;
 internal class Program
 {
     private static void Main(string[] args)
     {
-        // Model training example with 2 samples, 3 features, and 3 classes for classification (Random values)
-        int rows = 2;
-        int cols = 3;
+        // Model training example with 100 samples, 3 features, and 3 classes for classification (Random values)
+        int rows = 100;
+        int cols = 5;
         double min = -10.0;
         double max = 100.0;
         double[,] matrix = new double[rows, cols];
@@ -23,46 +22,58 @@ internal class Program
             }
         }
 
-        
-        int epochs = 1000;
+        (double[,] X, int[] y) = DataGenerator.CreateData(rows, cols);
 
-        double[,] y_true = { { 0, 1, 0 }, { 1, 0, 0 } };
+        int epochs = 10001;
 
 
-        Model.Layer layer1 = new Model.Layer(cols, 5);
-        Model.Layer layer2 = new Model.Layer(5, 3);
+        Model.Dense layer1 = new Model.Dense(X.GetLength(1), 64);
+        Model.Dense layer2 = new Model.Dense(64, 5);
         Model.ActivationReLU relu = new Model.ActivationReLU();
-        Model.ActivationSoftmax softmax = new Model.ActivationSoftmax(); 
+        Model.ActivationSoftmax softmax = new Model.ActivationSoftmax();
         Model.LossCCE loss = new Model.LossCCE();
-        Model.Optimizer_SGD optimizer = new Model.Optimizer_SGD();
+
+        // Optimizers
+        Model.Optimizer_SGD sgdOptim = new Model.Optimizer_SGD(0.001, 0.0001, 0.9);
+        Model.Optimizer_AdaGrad rmsOptimadaOptim = new Model.Optimizer_AdaGrad(1.0, 1e-5);
+        Model.Optimizer_RMSProp rmsOptim = new Model.Optimizer_RMSProp(0.9, 0.01, 1e-5);
+        Model.Optimizer_Adam adamOptim = new Model.Optimizer_Adam(0.9, 0.999, 0.02, 0.00001);
 
         for (int epoch = 0; epoch < epochs; epoch++)
         {
             // 1. Forward
-            layer1.Forward(matrix);
+            layer1.Forward(X);
             relu.Forward(layer1.Output);
             layer2.Forward(relu.Output);
             softmax.Forward(layer2.Output);
 
             // 2. Loss
-            double lossValue = loss.Calculate(softmax.Output, y_true);
+            double lossValue = loss.Calculate(softmax.Output, y);
 
             // 3. Backward
-            double[,] dZ = loss.Backward(softmax.Output, y_true);
+            double[,] dZ = softmax.Backward(y);
 
             dZ = layer2.Backward(dZ);
             dZ = relu.Backward(dZ);
             dZ = layer1.Backward(dZ);
 
             // 4. Update
-            optimizer.Update(layer1);
-            optimizer.Update(layer2);
+            adamOptim.PreUpdate();
+            adamOptim.Update(layer1);
+            adamOptim.Update(layer2);
+            adamOptim.PostUpdate();
+
+            layer1.ZeroGrad();
+            layer2.ZeroGrad();
 
             // logs
-            if (epoch % 100 == 0)
+            if (epoch % 1000 == 0)
             {
+                Console.WriteLine("------------------------------");
                 Console.WriteLine($"Epoch {epoch}, Loss: {lossValue}");
-                Console.WriteLine($"Accuracy: {PrintAccuracy(softmax.Output, y_true) * 100}%");
+                Console.WriteLine($"Accuracy: {PrintAccuracyInt(softmax.Output, y) * 100}%");
+                Console.WriteLine($"Lr: {adamOptim.currentLearningRate}");
+                Console.WriteLine("------------------------------");
             }
         }
 
@@ -103,6 +114,30 @@ internal class Program
                 }
             }
 
+            return correct / rows;
+        }
+        double PrintAccuracyInt(double[,] softmax_output, int[] target)
+        {
+            int rows = softmax_output.GetLength(0);
+            int cols = softmax_output.GetLength(1);
+            double correct = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                double maxVal = double.MinValue;
+                int predictedIndex = -1;
+                for (int j = 0; j < cols; j++)
+                {
+                    if (softmax_output[i, j] > maxVal)
+                    {
+                        maxVal = softmax_output[i, j];
+                        predictedIndex = j;
+                    }
+                }
+                if (target[i] == predictedIndex)
+                {
+                    correct++;
+                }
+            }
             return correct / rows;
         }
     }

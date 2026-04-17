@@ -9,15 +9,25 @@ namespace Model
         public double Calculate(double[,] output, double[,] y)
         {
             double[] sampleLosses = Forward(output, y);
+            return Mean(sampleLosses);
+        }
+        public double Calculate(double[,] output, int[] y)
+        {
+            double[] sampleLosses = Forward(output, y);
+            return Mean(sampleLosses);
+        }
+        protected double Mean(double[] values)
+        {
             double sum = 0;
 
-            foreach (double loss in sampleLosses)
+            foreach (double value in values)
             {
-                sum += loss;
+                sum += value;
             }
-            return sum / sampleLosses.Length;
-        }
 
+            return sum / values.Length;
+        }
+        public abstract double[] Forward(double[,] output, int[] y);
         public abstract double[] Forward(double[,] output, double[,] y);
     }
 }

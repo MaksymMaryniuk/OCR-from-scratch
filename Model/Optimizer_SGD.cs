@@ -4,28 +4,48 @@ using System.Text;
 
 namespace Model
 {
-    public class Optimizer_SGD
+    public class Optimizer_SGD : Optimizer
     {
-        public double LearningRate { get; set; }
+        protected double momentum = 0.0;
 
-        public Optimizer_SGD(double lr = 0.01)
+        public Optimizer_SGD(double lr = 0.01, double decay = 0.001, double momentum = 0.9) : base(lr, decay)
         {
-            LearningRate = lr;
+            this.momentum = momentum;
         }
-
-        public void Update(Layer layer)
+        public override void Update(Dense layer)
         {
-            for (int i = 0; i < layer.Weights.GetLength(0); i++)
+            if (momentum != 0)
             {
-                for (int j = 0; j < layer.Weights.GetLength(1); j++)
+                for (int i = 0; i < layer.Weights.GetLength(0); i++)
                 {
-                    layer.Weights[i, j] -= LearningRate * layer.dWeights[i, j];
+                    for (int j = 0; j < layer.Weights.GetLength(1); j++)
+                    {
+                        layer.WeightMomentums[i, j] = (momentum * layer.WeightMomentums[i, j]) - (currentLearningRate * layer.dWeights[i, j]);
+                        layer.Weights[i, j] += (momentum * layer.WeightMomentums[i, j]) - (currentLearningRate * layer.dWeights[i, j]);
+                    }
+                }
+
+                for (int j = 0; j < layer.Biases.Length; j++)
+                {
+                    layer.BiasMomentums[j] = (momentum * layer.BiasMomentums[j]) - (currentLearningRate * layer.dBiases[j]);
+                    layer.Biases[j] += (momentum * layer.BiasMomentums[j]) - (currentLearningRate * layer.dBiases[j]);
                 }
             }
-
-            for (int j = 0; j < layer.Biases.Length; j++)
+            else
             {
-                layer.Biases[j] -= LearningRate * layer.dBiases[j];
+                currentLearningRate = LearningRate * (1.0 / (1.0 + DecayRate * iteration));
+                for (int i = 0; i < layer.Weights.GetLength(0); i++)
+                {
+                    for (int j = 0; j < layer.Weights.GetLength(1); j++)
+                    {
+                        layer.Weights[i, j] -= currentLearningRate * layer.dWeights[i, j];
+                    }
+                }
+
+                for (int j = 0; j < layer.Biases.Length; j++)
+                {
+                    layer.Biases[j] -= currentLearningRate * layer.dBiases[j];
+                }
             }
         }
     }
