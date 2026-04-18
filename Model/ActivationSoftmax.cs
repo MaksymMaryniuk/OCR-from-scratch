@@ -30,34 +30,32 @@ namespace Model
                 }
             }
         }
-        public override double[,] Backward(double[,] y_true)
+        public override void Backward(double[,] y_true)
         {
-            double[,] dA = new double[Output.GetLength(0), Output.GetLength(1)];
+            Dinputs = new double[Output.GetLength(0), Output.GetLength(1)];
 
             for (int i = 0; i < Output.GetLength(0); i++)
             {
                 for (int j = 0; j < Output.GetLength(1); j++)
                 {
-                    dA[i, j] = Output[i, j] - y_true[i, j];
+                    Dinputs[i, j] = Output[i, j] - y_true[i, j];
                 }
             }
-            // operations: dA = A - Y
+            // operations: Dinputs = A - Y
             // where A - output from softmax, Y - vector of true labels (one-hot encoding)
-            return dA;
         }
-        public double[,] Backward(int[] y_true)
+        public void Backward(int[] y_true)
         {
-            double[,] dA = new double[Output.GetLength(0), Output.GetLength(1)];
+            Dinputs = new double[Output.GetLength(0), Output.GetLength(1)];
             for (int i = 0; i < Output.GetLength(0); i++)
             {
                 for (int j = 0; j < Output.GetLength(1); j++)
                 {
-                    dA[i, j] = Output[i, j] - (y_true[i] == j ? 1 : 0);
+                    Dinputs[i, j] = Output[i, j] - (y_true[i] == j ? 1 : 0);
                 }
             }
-            // operations: dA = A - Y
+            // operations: Dinputs = A - Y
             // where A - output from softmax, Y - vector of true labels (one-hot encoding)
-            return dA;
         }
     }
 }

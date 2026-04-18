@@ -11,7 +11,7 @@ namespace Model
         {
         }
 
-        public override void Update(Dense layer)
+        public override void Update(Layer_Dense layer)
         {
             for (int i = 0; i < layer.Weights.GetLength(0); i++)
             {

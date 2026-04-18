@@ -17,7 +17,7 @@ namespace Model
             Beta2 = beta2;
         }
 
-        public override void Update(Dense layer)
+        public override void Update(Layer_Dense layer)
         {
             double beta1Correction = 1 - Math.Pow(Beta1, iteration + 1);
             double beta2Correction = 1 - Math.Pow(Beta2, iteration + 1);

@@ -24,7 +24,7 @@ namespace Model
             currentLearningRate = LearningRate * (1.0 / (1.0 + DecayRate * iteration));
         }
 
-        public virtual void Update(Dense layer)
+        public virtual void Update(Layer_Dense layer)
         {
             ;
         }

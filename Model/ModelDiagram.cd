@@ -1,55 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Model.Dense">
-    <Position X="1" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQIAgMCAAAAAAAAEQgAAAAAAAAAAAAhAAUAEABgAAAI=</HashCode>
-      <FileName>Dense.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Model.Layer">
-    <Position X="3.5" Y="0.5" Width="1.5" />
+    <Position X="7" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAAIAAAAEAAAAAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AgAAAACAAAAAAAAAAAAIAAAAEAACAEAAAAAAAAAAAAI=</HashCode>
       <FileName>Layer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.ActivationSoftmax">
-    <Position X="5.5" Y="3" Width="1.5" />
+    <Position X="9" Y="4" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>ActivationSoftmax.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.ActivationReLU">
-    <Position X="3.5" Y="3" Width="1.5" />
+    <Position X="4.5" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>ActivationReLU.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.Loss">
-    <Position X="7.5" Y="0.5" Width="1.5" />
+    <Position X="12.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAEAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Loss.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.LossCCE">
-    <Position X="7.5" Y="2.75" Width="1.5" />
+    <Position X="12.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>BAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>LossCCE.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.Optimizer_AdaGrad">
-    <Position X="14" Y="5.75" Width="1.75" />
-    <InheritanceLine Type="Model.AdaptiveOptimizer" FixedToPoint="true">
+    <Position X="18" Y="5.75" Width="1.75" />
+    <InheritanceLine Type="Model.AdaptiveOptimizer" ManuallyRouted="true" FixedToPoint="true">
       <Path>
-        <Point X="17.5" Y="4.127" />
-        <Point X="17.5" Y="4.502" />
-        <Point X="14.812" Y="4.502" />
-        <Point X="14.812" Y="5.75" />
+        <Point X="21" Y="3.877" />
+        <Point X="21" Y="5.375" />
+        <Point X="18.812" Y="5.375" />
+        <Point X="18.812" Y="5.75" />
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
@@ -58,38 +51,74 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Model.Optimizer_RMSProp">
-    <Position X="16.5" Y="5.5" Width="2" />
+    <Position X="21" Y="5.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Optimizer_RMSProp.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.Optimizer_SGD">
-    <Position X="10.25" Y="5.5" Width="1.5" />
+    <Position X="14.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizer_SGD.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.Optimizer_Adam">
-    <Position X="19.75" Y="5.5" Width="2" />
+    <Position X="23.5" Y="5.75" Width="2" />
+    <InheritanceLine Type="Model.AdaptiveOptimizer" ManuallyRouted="true">
+      <Path>
+        <Point X="21" Y="3.877" />
+        <Point X="21" Y="5.356" />
+        <Point X="24.5" Y="5.356" />
+        <Point X="24.5" Y="5.75" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Optimizer_Adam.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.Optimizer">
-    <Position X="13" Y="0.5" Width="1.5" />
+    <Position X="14.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAADAAEAAAAAABAAAAAAAAAAAAAAAAAACEAAAA=</HashCode>
       <FileName>Optimizer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Model.AdaptiveOptimizer">
-    <Position X="16.75" Y="2.25" Width="1.5" />
+    <Position X="20.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAA=</HashCode>
       <FileName>AdaptiveOptimizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.AdditionalMath">
+    <Position X="11" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAgAQAAABAAAAAABAAAAEAAgAAAA=</HashCode>
+      <FileName>AdditionalMath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Layer_Dropout">
+    <Position X="2.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAIICAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAI=</HashCode>
+      <FileName>Layer_Dropout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Layer_Dense">
+    <Position X="7" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIAgECAAAAAAAAEQAAAABAAAAAAAAgAAEAAABAAAAI=</HashCode>
+      <FileName>Layer_Dense.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Model">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMgAACUAAAAgAAAAAQAAAAAAAAAAAAEAAAAAAAAAAI=</HashCode>
+      <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

@@ -12,7 +12,7 @@ namespace Model
         {
             this.momentum = momentum;
         }
-        public override void Update(Dense layer)
+        public override void Update(Layer_Dense layer)
         {
             if (momentum != 0)
             {

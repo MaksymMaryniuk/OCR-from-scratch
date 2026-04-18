@@ -15,7 +15,7 @@ namespace Model
             Epsilon = epsilon;
         }
 
-        protected void EnsureCacheInitialized(Dense layer)
+        protected void EnsureCacheInitialized(Layer_Dense layer)
         {
             if (layer.WeightCache == null)
             {

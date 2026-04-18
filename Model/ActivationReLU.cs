@@ -18,21 +18,20 @@ namespace Model
                 }
             }
         }
-        public override double[,] Backward(double[,] dA)
+        public override void Backward(double[,] dA)
         {
             // operations: dZ = dA * (Z > 0)
             // where dA - grad due to previous layer (or from derivitave loss to respect of ), Z - input to ReLU
 
-            double[,] dZ = new double[dA.GetLength(0), dA.GetLength(1)];
+            Dinputs = new double[dA.GetLength(0), dA.GetLength(1)];
 
             for (int i = 0; i < dA.GetLength(0); i++)
             {
                 for (int j = 0; j < dA.GetLength(1); j++)
                 {
-                    dZ[i, j] = Inputs[i, j] > 0 ? dA[i, j] : 0.001 * dA[i, j];
+                    Dinputs[i, j] = Inputs[i, j] > 0 ? dA[i, j] : 0.001 * dA[i, j];
                 }
             }
-            return dZ;
         }
     }
 }
