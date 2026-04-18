@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Model.Layers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Model
+namespace Model.Optimizers
 {
     public class AdaptiveOptimizer : Optimizer
     {

@@ -1,4 +1,6 @@
 ﻿using Model;
+using Model.Layers;
+using Model.Optimizers;
 internal class Program
 {
     private static void Main(string[] args)
@@ -12,17 +14,16 @@ internal class Program
         int epochs = 10000;
 
         // Layers
-        Model.Layer_Dense layer1 = new Model.Layer_Dense(X.GetLength(1), 256, 0, 0.000001, 0, 0.000001);
-        Model.Layer_Dense layer2 = new Model.Layer_Dense(256, 3);
-        Model.Layer_Dropout dropout = new Model.Layer_Dropout(0.1);
-        Model.ActivationReLU relu = new Model.ActivationReLU();
-        Model.ActivationSoftmax softmax = new Model.ActivationSoftmax();
-
+        Layer_Dense layer1 = new Model.Layers.Layer_Dense(X.GetLength(1), 256, 0, 0.000001, 0, 0.000001);
+        Layer_Dense layer2 = new Model.Layers.Layer_Dense(256, 3);
+        Layer_Dropout dropout = new Model.Layers.Layer_Dropout(0.1);
+        ActivationReLU relu = new Model.Layers.ActivationReLU();
+        ActivationSoftmax softmax = new Model.Layers.ActivationSoftmax();
         // Loss
         Model.LossCCE loss = new Model.LossCCE();
 
         // Optimizer
-        Model.Optimizer_Adam adamOptim = new Model.Optimizer_Adam(0.9, 0.999, 0.02, 0.00001);
+        Optimizer_Adam adamOptim = new Model.Optimizers.Optimizer_Adam(0.9, 0.999, 0.02, 0.00001);
 
 
         // Model

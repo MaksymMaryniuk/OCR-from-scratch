@@ -1,9 +1,10 @@
 ﻿using Microsoft.VisualBasic;
+using Model.Layers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model
+namespace Model.Optimizers
 {
     public class Optimizer_AdaGrad : AdaptiveOptimizer
     {

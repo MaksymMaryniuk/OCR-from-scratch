@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Model.Layers;
+using Model.Optimizers;
+using System;
 using System.Collections.Generic;
 using System.Text;
 

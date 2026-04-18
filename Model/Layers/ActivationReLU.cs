@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model
+namespace Model.Layers
 {
     public class ActivationReLU : Layer
     {
