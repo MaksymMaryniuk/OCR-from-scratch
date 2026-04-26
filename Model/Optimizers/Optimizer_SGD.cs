@@ -7,9 +7,9 @@ namespace Model.Optimizers
 {
     public class Optimizer_SGD : Optimizer
     {
-        protected double momentum = 0.0;
+        protected float momentum = 0.0F;
 
-        public Optimizer_SGD(double lr = 0.01, double decay = 0.001, double momentum = 0.9) : base(lr, decay)
+        public Optimizer_SGD(float lr = 0.01F, float decay = 0.001F, float momentum = 0.9F) : base(lr, decay)
         {
             this.momentum = momentum;
         }
@@ -34,7 +34,7 @@ namespace Model.Optimizers
             }
             else
             {
-                currentLearningRate = LearningRate * (1.0 / (1.0 + DecayRate * iteration));
+                currentLearningRate = LearningRate * (1.0F / (1.0F + DecayRate * iteration));
                 for (int i = 0; i < layer.Weights.GetLength(0); i++)
                 {
                     for (int j = 0; j < layer.Weights.GetLength(1); j++)

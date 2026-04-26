@@ -8,21 +8,21 @@ namespace Model.Optimizers
 {
     public abstract class Optimizer
     {
-        public double currentLearningRate;
+        public float currentLearningRate;
         protected int iteration = 0;
 
-        public double LearningRate { get; set; }
+        public float LearningRate { get; set; }
 
-        public double DecayRate { get; set; }
+        public float DecayRate { get; set; }
 
-        protected Optimizer(double lr = 0.01, double decay = 0.001)
+        protected Optimizer(float lr = 0.01F, float decay = 0.001F)
         {
             LearningRate = lr;
             DecayRate = decay;
         }
         public void PreUpdate()
         {
-            currentLearningRate = LearningRate * (1.0 / (1.0 + DecayRate * iteration));
+            currentLearningRate = LearningRate * (1.0F / (1.0F + DecayRate * iteration));
         }
 
         public virtual void Update(Layer_Dense layer)

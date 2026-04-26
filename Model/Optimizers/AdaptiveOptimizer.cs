@@ -8,10 +8,10 @@ namespace Model.Optimizers
 {
     public class AdaptiveOptimizer : Optimizer
     {
-        public double Epsilon { get; set; }
+        public float Epsilon { get; set; }
 
 
-        public AdaptiveOptimizer(double learningRate = 0.01, double decay = 0.001, double epsilon = 1e-8) : base(learningRate, decay)
+        public AdaptiveOptimizer(float learningRate = 0.01f, float decay = 0.001f, float epsilon = 1e-8f) : base(learningRate, decay)
         {
             Epsilon = epsilon;
         }
@@ -20,13 +20,13 @@ namespace Model.Optimizers
         {
             if (layer.WeightCache == null)
             {
-                layer.WeightCache = new double[layer.Weights.GetLength(0), layer.Weights.GetLength(1)];
-                layer.BiasCache = new double[layer.Biases.Length];
+                layer.WeightCache = new float[layer.Weights.GetLength(0), layer.Weights.GetLength(1)];
+                layer.BiasCache = new float[layer.Biases.Length];
 
                 if (this is Optimizer_Adam && layer.WeightMomentums == null)
                 {
-                    layer.WeightMomentums = new double[layer.Weights.GetLength(0), layer.Weights.GetLength(1)];
-                    layer.BiasMomentums = new double[layer.Biases.Length];
+                    layer.WeightMomentums = new float[layer.Weights.GetLength(0), layer.Weights.GetLength(1)];
+                    layer.BiasMomentums = new float[layer.Biases.Length];
                 }
             }
         }

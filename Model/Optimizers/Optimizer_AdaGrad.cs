@@ -8,7 +8,7 @@ namespace Model.Optimizers
 {
     public class Optimizer_AdaGrad : AdaptiveOptimizer
     {
-        public Optimizer_AdaGrad(double learningRate = 1.0, double decay = 0.0, double epsilon = 1e-8) : base(learningRate, decay, epsilon)
+        public Optimizer_AdaGrad(float learningRate = 1.0F, float decay = 0.0F, float epsilon = 1e-8F) : base(learningRate, decay, epsilon)
         {
         }
 
@@ -18,14 +18,14 @@ namespace Model.Optimizers
             {
                 for (int j = 0; j < layer.Weights.GetLength(1); j++)
                 {
-                    layer.WeightMomentums[i, j] += Math.Pow(layer.dWeights[i, j], 2);
-                    layer.Weights[i, j] -= (currentLearningRate * layer.dWeights[i, j]) / (Math.Sqrt(layer.WeightMomentums[i, j]) + Epsilon);
+                    layer.WeightMomentums[i, j] += MathF.Pow(layer.dWeights[i, j], 2);
+                    layer.Weights[i, j] -= (currentLearningRate * layer.dWeights[i, j]) / (MathF.Sqrt(layer.WeightMomentums[i, j]) + Epsilon);
                 }
             }
             for (int j = 0; j < layer.Biases.Length; j++)
             {
-                layer.BiasMomentums[j] += Math.Pow(layer.dBiases[j], 2);
-                layer.Biases[j] -= (currentLearningRate * layer.dBiases[j]) / (Math.Sqrt(layer.BiasMomentums[j]) + Epsilon);
+                layer.BiasMomentums[j] += MathF.Pow(layer.dBiases[j], 2);
+                layer.Biases[j] -= (currentLearningRate * layer.dBiases[j]) / (MathF.Sqrt(layer.BiasMomentums[j]) + Epsilon);
             }
         }
     }
