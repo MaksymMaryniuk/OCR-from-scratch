@@ -11,9 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="data\emnist-balanced-train.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Folder Include="data\" />
   </ItemGroup>
 
 </Project>
