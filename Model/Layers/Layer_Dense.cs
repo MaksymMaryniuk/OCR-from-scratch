@@ -6,29 +6,29 @@ namespace Model.Layers
 {
     public class Layer_Dense : Layer
     {
-        public double[,] Weights { get; set; }
-        public double[] Biases { get; set; }
-        public double[,] dWeights { get; set; }
-        public double[] dBiases { get; set; }
-        public double[,] WeightMomentums { get; set; }
-        public double[] BiasMomentums { get; set; }
-        public double[,] WeightCache { get; set; }
-        public double[] BiasCache { get; set; }
-        public double L1W { get; set; }
-        public double L2W { get; set; }
-        public double L1B { get; set; }
-        public double L2B { get; set; }
+        public float[,] Weights { get; set; }
+        public float[] Biases { get; set; }
+        public float[,] dWeights { get; set; }
+        public float[] dBiases { get; set; }
+        public float[,] WeightMomentums { get; set; }
+        public float[] BiasMomentums { get; set; }
+        public float[,] WeightCache { get; set; }
+        public float[] BiasCache { get; set; }
+        public float L1W { get; set; }
+        public float L2W { get; set; }
+        public float L1B { get; set; }
+        public float L2B { get; set; }
 
 
-        public Layer_Dense(int num_inputs, int num_neurons, double l1w = 0.0, double l2w = 0.0, double l1b = 0.0, double l2b = 0.0)
+        public Layer_Dense(int num_inputs, int num_neurons, float l1w = 0.0F, float l2w = 0.0F, float l1b = 0.0F, float l2b = 0.0F)
         {
-            Weights = new double[num_inputs, num_neurons];
-            Biases = new double[num_neurons];
+            Weights = new float[num_inputs, num_neurons];
+            Biases = new float[num_neurons];
 
-            WeightMomentums = new double[num_inputs, num_neurons];
-            BiasMomentums = new double[num_neurons];
-            WeightCache = new double[num_inputs, num_neurons];
-            BiasCache = new double[num_neurons];
+            WeightMomentums = new float[num_inputs, num_neurons];
+            BiasMomentums = new float[num_neurons];
+            WeightCache = new float[num_inputs, num_neurons];
+            BiasCache = new float[num_neurons];
             L1W = l1w;
             L2W = l2w;
             L1B = l1b;
@@ -36,9 +36,9 @@ namespace Model.Layers
             AdditionalMath.Matrix_filler(Weights);
             AdditionalMath.Vector_filler(Biases);
         }
-        public override void Forward(double[,] X)
+        public override void Forward(float[,] X)
         {
-            Output = new double[X.GetLength(0), Weights.GetLength(1)];
+            Output = new float[X.GetLength(0), Weights.GetLength(1)];
             Inputs = X;
             Output = AdditionalMath.Matrix_Multiplier(X, Weights);
 
@@ -50,75 +50,81 @@ namespace Model.Layers
                 }
             }
         }
-        public override void Backward(double[,] dZ)
+
+        public override void Backward(float[,] dZ)
         {
-            /*operations: dW = X^T * dZ
-                          db = sum(dZ)
-                          dX = dZ * W^T
-             where X - inputs, dZ - grad due to output layer, W - weights of layer,
-             dW - grad due to weights,
-             db - grad due to biases,
-             dX - grad due to inputs
-            */
+            int batchSize = dZ.GetLength(0);
+            int inputCount = Inputs.GetLength(1);
+            int neuronCount = dZ.GetLength(1);
 
+            // 1. ЛІНИВА ІНІЦІАЛІЗАЦІЯ: створюємо масиви тільки якщо розмір змінився або їх немає
+            if (dWeights == null || dWeights.GetLength(0) != inputCount || dWeights.GetLength(1) != neuronCount)
+                dWeights = new float[inputCount, neuronCount];
 
-            //Gradients on parameters
-            dWeights = AdditionalMath.Matrix_Multiplier(AdditionalMath.Transpose(Inputs), dZ);
-            dBiases = new double[dZ.GetLength(1)];
+            if (dBiases == null || dBiases.Length != neuronCount)
+                dBiases = new float[neuronCount];
 
-            for (int i = 0; i < dZ.GetLength(0); i++)
+            if (Dinputs == null || Dinputs.GetLength(0) != batchSize || Dinputs.GetLength(1) != inputCount)
+                Dinputs = new float[batchSize, inputCount];
+
+            // 2. ГРАДІЄНТ ПО ВАГАХ (dW = X^T * dZ)
+            // Паралелимо по входах (inputCount)
+            System.Threading.Tasks.Parallel.For(0, inputCount, i =>
             {
-                for (int j = 0; j < dZ.GetLength(1); j++)
+                for (int j = 0; j < neuronCount; j++)
                 {
-                    dBiases[j] += dZ[i, j];
-                }
-            }
-            //Gradients on regularization
-            if (L1W > 0)
-            {
-                for (int i = 0; i < Weights.GetLength(0); i++)
-                {
-                    for (int j = 0; j < Weights.GetLength(1); j++)
+                    float sum = 0;
+                    for (int s = 0; s < batchSize; s++)
                     {
-                        dWeights[i, j] += L1W * Math.Sign(Weights[i, j]);
+                        sum += Inputs[s, i] * dZ[s, j];
                     }
+                    dWeights[i, j] = sum / batchSize;
                 }
-            }
-            if (L2W > 0)
-            {
-                for (int i = 0; i < Weights.GetLength(0); i++)
-                {
-                    for (int j = 0; j < Weights.GetLength(1); j++)
-                    {
-                        dWeights[i, j] += L2W * 2 * Weights[i, j];
-                    }
-                }
-            }
-            if (L1B > 0)
-            {
-                for (int i = 0; i < Biases.Length; i++)
-                {
-                    dBiases[i] += L1B * Math.Sign(Biases[i]);
-                }
-            }
-            if (L2B > 0)
-            {
-                for (int i = 0; i < Biases.Length; i++)
-                {
-                    dBiases[i] += L2B * 2 * Biases[i];
-                }
-            }
+            });
 
-            //Gradients on values
-            Dinputs = AdditionalMath.Matrix_Multiplier(dZ, AdditionalMath.Transpose(Weights));
+            // 3. ГРАДІЄНТ ПО БІАСАХ (db = sum(dZ))
+            System.Threading.Tasks.Parallel.For(0, neuronCount, j =>
+            {
+                float sum = 0;
+                for (int s = 0; s < batchSize; s++)
+                {
+                    sum += dZ[s, j];
+                }
+                dBiases[j] = sum / batchSize;
+            });
+
+            // 4. ГРАДІЄНТ ПО ВХОДАХ (dX = dZ * W^T)
+            // Оптимізація: читаємо Weights[i, j] послідовно в межах рядка
+            System.Threading.Tasks.Parallel.For(0, batchSize, s =>
+            {
+                for (int i = 0; i < inputCount; i++)
+                {
+                    float sum = 0;
+                    for (int j = 0; j < neuronCount; j++)
+                    {
+                        // Тут j змінюється найшвидше - це краще для кешу
+                        sum += dZ[s, j] * Weights[i, j];
+                    }
+                    Dinputs[s, i] = sum;
+                }
+            });
         }
 
 
         public void ZeroGrad()
         {
-            Array.Clear(dWeights, 0, dWeights.Length);
+            if (Weights == null || Biases == null)
+                return;
 
-            Array.Clear(dBiases, 0, dBiases.Length);
+            if (dWeights == null)
+                dWeights = new float[Weights.GetLength(0), Weights.GetLength(1)];
+            else
+                Array.Clear(dWeights, 0, dWeights.Length);
+
+            if (dBiases == null)
+                dBiases = new float[Biases.Length];
+            else
+                Array.Clear(dBiases, 0, dBiases.Length);
         }
     }
 }

@@ -7,23 +7,23 @@ namespace Model
 {
     public abstract class Loss
     {
-        public double Calculate(double[,] output, double[,] y)
+        public float Calculate(float[,] output, float[,] y)
         {
-            double[] sampleLosses = Forward(output, y);
+            float[] sampleLosses = Forward(output, y);
             return sampleLosses.Average();
         }
-        public double Calculate(double[,] output, int[] y)
+        public float Calculate(float[,] output, int[] y)
         {
-            double[] sampleLosses = Forward(output, y);
+            float[] sampleLosses = Forward(output, y);
             return sampleLosses.Average();
         }
-        public abstract double[] Forward(double[,] output, int[] y);
-        public abstract double[] Forward(double[,] output, double[,] y);
-        public abstract double[,] Backward(double[,] dvalues, int[] y);
+        public abstract float[] Forward(float[,] output, int[] y);
+        public abstract float[] Forward(float[,] output, float[,] y);
+        public abstract float[,] Backward(float[,] dvalues, int[] y);
 
-        public double Regularization_Loss(Layer layer)
+        public float Regularization_Loss(Layer layer)
         {
-            double regularization_loss = 0.0;
+            float regularization_loss = 0.0F;
             if (layer is Layer_Dense denseLayer)
             {
                 if (denseLayer.L1W > 0)

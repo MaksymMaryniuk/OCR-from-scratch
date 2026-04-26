@@ -6,33 +6,33 @@ namespace Model.Layers
 {
     public class ActivationSoftmax : Layer
     {
-        public override void Forward(double[,] inputs)
+        public override void Forward(float[,] inputs)
         {
             int rows = inputs.GetLength(0);
             int cols = inputs.GetLength(1);
-            Output = new double[rows, cols];
+            Output = new float[rows, cols];
             for (int i = 0; i < rows; i++)
             {
-                double maxInput = double.NegativeInfinity;
+                float maxInput = float.NegativeInfinity;
                 for (int j = 0; j < cols; j++)
                 {
                     if (inputs[i, j] > maxInput)
                         maxInput = inputs[i, j];
                 }
-                double sumExp = 0;
+                float sumExp = 0;
                 for (int j = 0; j < cols; j++)
                 {
-                    sumExp += Math.Exp(inputs[i, j] - maxInput);
+                    sumExp += MathF.Exp(inputs[i, j] - maxInput);
                 }
                 for (int j = 0; j < cols; j++)
                 {
-                    Output[i, j] = Math.Exp(inputs[i, j] - maxInput) / sumExp;
+                    Output[i, j] = MathF.Exp(inputs[i, j] - maxInput) / sumExp;
                 }
             }
         }
-        public override void Backward(double[,] y_true)
+        public override void Backward(float[,] y_true)
         {
-            Dinputs = new double[Output.GetLength(0), Output.GetLength(1)];
+            Dinputs = new float[Output.GetLength(0), Output.GetLength(1)];
 
             for (int i = 0; i < Output.GetLength(0); i++)
             {
@@ -46,7 +46,7 @@ namespace Model.Layers
         }
         public void Backward(int[] y_true)
         {
-            Dinputs = new double[Output.GetLength(0), Output.GetLength(1)];
+            Dinputs = new float[Output.GetLength(0), Output.GetLength(1)];
             for (int i = 0; i < Output.GetLength(0); i++)
             {
                 for (int j = 0; j < Output.GetLength(1); j++)

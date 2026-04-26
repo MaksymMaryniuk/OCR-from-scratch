@@ -6,10 +6,10 @@ namespace Model.Layers
 {
     public class ActivationReLU : Layer
     {
-        public override void Forward(double[,] inputs) 
+        public override void Forward(float[,] inputs) 
         {
             Inputs = inputs;
-            Output = new double[inputs.GetLength(0), inputs.GetLength(1)];
+            Output = new float[inputs.GetLength(0), inputs.GetLength(1)];
             for (int i = 0; i < inputs.GetLength(0); i++)
             {
                 for (int j = 0; j < inputs.GetLength(1); j++)
@@ -18,18 +18,18 @@ namespace Model.Layers
                 }
             }
         }
-        public override void Backward(double[,] dA)
+        public override void Backward(float[,] dA)
         {
             // operations: dZ = dA * (Z > 0)
             // where dA - grad due to previous layer (or from derivitave loss to respect of ), Z - input to ReLU
 
-            Dinputs = new double[dA.GetLength(0), dA.GetLength(1)];
+            Dinputs = new float[dA.GetLength(0), dA.GetLength(1)];
 
             for (int i = 0; i < dA.GetLength(0); i++)
             {
                 for (int j = 0; j < dA.GetLength(1); j++)
                 {
-                    Dinputs[i, j] = Inputs[i, j] > 0 ? dA[i, j] : 0.001 * dA[i, j];
+                    Dinputs[i, j] = (float)(Inputs[i, j] > 0 ? dA[i, j] : 0.001 * dA[i, j]);
                 }
             }
         }

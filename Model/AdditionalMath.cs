@@ -1,69 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Model
 {
     public static class AdditionalMath
     {
         private static Random rand = new Random();
-        public static void Matrix_filler(double[,] value)
+        public static void Matrix_filler(float[,] value)
         {
 
             for (int i = 0; i < value.GetLength(0); i++)
             {
                 for (int j = 0; j < value.GetLength(1); j++)
                 {
-                    value[i, j] = (rand.NextDouble() * 2 - 1) * 0.1;
+                    value[i, j] = (float)((rand.NextDouble() * 2 - 1) * 0.1);
                 }
             }
         }
-        public static void Vector_filler(double[] value)
+        public static void Vector_filler(float[] value)
         {
             for (int i = 0; i < value.Length; i++)
             {
-                value[i] = rand.NextDouble() * 2 - 1;
+                value[i] = (float)(rand.NextDouble() * 2 - 1);
             }
         }
 
-        public static double[,] Matrix_Multiplier(double[,] matrix1, double[,] matrix2)
+        public static float[,] Matrix_Multiplier(float[,] matrix1, float[,] matrix2)
         {
-            int output_rows = matrix1.GetLength(0);
-            int output_cols = matrix2.GetLength(1);
-            double[,] output = new double[output_rows, output_cols];
+            int rows = matrix1.GetLength(0);
+            int cols = matrix2.GetLength(1);
+            int common = matrix1.GetLength(1);
 
-            for (int rows = 0; rows < output_rows; rows++)
+            float[,] output = new float[rows, cols];
+
+            Parallel.For(0, rows, i =>
             {
-                for (int cols = 0; cols < output_cols; cols++)
+                for (int k = 0; k < common; k++)
                 {
-                    double sum = 0;
-                    for (int common = 0; common < matrix1.GetLength(1); common++)
+                    float a = matrix1[i, k];
+                    for (int j = 0; j < cols; j++)
                     {
-                        sum += matrix1[rows, common] * matrix2[common, cols];
+                        output[i, j] += a * matrix2[k, j];
                     }
-                    output[rows, cols] = sum;
                 }
-            }
+            });
+
             return output;
         }
 
-        public static double[,] Transpose(double[,] matrix)
+        public static float[,] Transpose(float[,] matrix)
         {
             int rows = matrix.GetLength(0);
             int cols = matrix.GetLength(1);
-            double[,] transposed = new double[cols, rows];
-            for (int i = 0; i < rows; i++)
+            float[,] transposed = new float[cols, rows];
+
+            Parallel.For(0, rows, i =>
             {
                 for (int j = 0; j < cols; j++)
                 {
                     transposed[j, i] = matrix[i, j];
                 }
-            }
+            });
             return transposed;
         }
-        public static double SumOfAbsoluteValues(double[,] matrix)
+        public static float SumOfAbsoluteValues(float[,] matrix)
         {
-            double sum = 0;
+            float sum = 0;
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
@@ -73,18 +77,18 @@ namespace Model
             }
             return sum;
         }
-        public static double SumOfAbsoluteValues(double[] vector)
+        public static float SumOfAbsoluteValues(float[] vector)
         {
-            double sum = 0;
+            float sum = 0;
             for (int i = 0; i < vector.Length; i++)
             {
                 sum += Math.Abs(vector[i]);
             }
             return sum;
         }
-        public static double SumOfSquares(double[,] matrix)
+        public static float SumOfSquares(float[,] matrix)
         {
-            double sum = 0;
+            float sum = 0;
             for (int i = 0; i < matrix.GetLength(0); i++)
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
@@ -94,14 +98,31 @@ namespace Model
             }
             return sum;
         }
-        public static double SumOfSquares(double[] vector)
+        public static float SumOfSquares(float[] vector)
         {
-            double sum = 0;
+            float sum = 0;
             for (int i = 0; i < vector.Length; i++)
             {
                 sum += vector[i] * vector[i];
             }
             return sum;
+        }
+        public static int GetArgmax(float[,] predictions)
+        {
+            int numClasses = predictions.GetLength(1);
+            int bestClass = 0;
+            float maxVal = predictions[0, 0];
+
+            for (int i = 1; i < numClasses; i++)
+            {
+                if (predictions[0, i] > maxVal)
+                {
+                    maxVal = predictions[0, i];
+                    bestClass = i;
+                }
+            }
+
+            return bestClass;
         }
     }
 }

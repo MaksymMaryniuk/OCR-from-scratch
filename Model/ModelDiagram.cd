@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Model.Layers.ActivationReLU" Collapsed="true">
+  <Class Name="Model.Layers.ActivationReLU">
     <Position X="16" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Layers\ActivationReLU.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Layers.ActivationSoftmax" Collapsed="true">
+  <Class Name="Model.Layers.ActivationSoftmax">
     <Position X="18.25" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Layers\ActivationSoftmax.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Layers.Layer_Dense" Collapsed="true">
+  <Class Name="Model.Layers.Layer_Dense">
     <Position X="20.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQIAgECAAAAAAAAEQAAAABAAAAAAAAgAAEAAABAAAAI=</HashCode>
@@ -45,7 +45,7 @@
   <Class Name="Model.DataGenerator" Collapsed="true">
     <Position X="27" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAAACAAAAAAAAAAAAAAAAAAAIAAAAEAAAAA=</HashCode>
       <FileName>DataGenerator.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -66,7 +66,7 @@
   <Class Name="Model.Model" Collapsed="true">
     <Position X="25.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAMgAACUAAAAgAAAAAQAAAAAAAAAAAAEAAAAAAAAAAI=</HashCode>
+      <HashCode>CAJgAACUIACAgAEAAAQgEUAAAAAAAAAEAAEAAAAAEAI=</HashCode>
       <FileName>Model.cs</FileName>
     </TypeIdentifier>
   </Class>
