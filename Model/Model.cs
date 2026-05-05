@@ -154,9 +154,9 @@ namespace Model
 
                     batchCount++;
                 }
-                AverageAccuracy = totalLoss / batchCount;
-                Console.WriteLine($"Епоха {epoch}/{epochs} - Loss: {totalLoss / batchCount:F4}");
-                Console.WriteLine($"Точність після епохи {epoch}: {AverageAccuracy:F4}");
+                float avgLoss = totalLoss / batchCount;
+                AverageAccuracy = epochAccuracy / batchCount;
+                Console.WriteLine($"Епоха {epoch}/{epochs} — Loss: {avgLoss:F4}, Accuracy: {AverageAccuracy:F4}");
             }
         }
 
