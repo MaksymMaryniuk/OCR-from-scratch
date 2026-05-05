@@ -1,0 +1,96 @@
+﻿<Window x:Class="OCR.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OCR App" Height="500" Width="800">
+
+    <Grid>
+        <Grid x:Name="MainMenu">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
+                <Button Content="Запуск" Height="50" Margin="0,10" Click="Run_Click"/>
+                <Button Content="Тестовий режим" Height="50" Margin="0,10" Click="Test_Click"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="RunView" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Content="Назад" Click="Back_Click" Margin="10"/>
+
+            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="10">
+                <Image x:Name="LoadedImage" Stretch="Uniform"/>
+            </Border>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10">
+                <Button Content="Вибрати зображення" Click="LoadImage_Click" Margin="0,5"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <CheckBox x:Name="SaveImagesCheck" Content="Зберігати знайдені фото" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="ImageStatusText" Margin="15,0,0,0" Foreground="Blue" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <Button Content="Знайти текст" Click="Recognize_Click" Margin="0,5"/>
+                <TextBox x:Name="ResultText" Height="100" TextWrapping="Wrap"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid x:Name="TestView" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Button Content="Назад" Click="Back_Click" Margin="10"/>
+
+            <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="10">
+                <Canvas x:Name="DrawCanvas" Background="White"
+                        MouseDown="Canvas_MouseDown"
+                        MouseMove="Canvas_MouseMove"
+                        MouseUp="Canvas_MouseUp"/>
+            </Border>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
+                <Button Content="Розпізнати" Click="RecognizeDraw_Click" Margin="5"/>
+                <Button Content="Очистити" Click="ClearCanvas_Click" Margin="5"/>
+                <TextBox x:Name="DrawResult" Width="300" Margin="5"/>
+
+                <CheckBox x:Name="ShowSegmentationCheck" Content="Показати сегментацію" Margin="10,0"/>
+
+            </StackPanel>
+
+            
+
+
+
+
+
+            <Grid x:Name="TestPanel" Visibility="Collapsed">
+                <StackPanel>
+
+                    <Border BorderBrush="Black" BorderThickness="1">
+                        <Image x:Name="DrawImage"
+                   Width="600"
+                   Height="280"
+                   MouseMove="DrawImage_MouseMove"
+                   MouseDown="DrawImage_MouseDown"/>
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Знайти текст" Click="RecognizeDraw_Click"/>
+                        <Button Content="Очистити" Click="ClearCanvas_Click"/>
+                    </StackPanel>
+
+                    <TextBlock x:Name="ResultTextImage"/>
+
+                </StackPanel>
+                
+                
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
