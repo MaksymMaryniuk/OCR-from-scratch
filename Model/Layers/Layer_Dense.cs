@@ -57,7 +57,6 @@ namespace Model.Layers
             int inputCount = Inputs.GetLength(1);
             int neuronCount = dZ.GetLength(1);
 
-            // 1. ЛІНИВА ІНІЦІАЛІЗАЦІЯ: створюємо масиви тільки якщо розмір змінився або їх немає
             if (dWeights == null || dWeights.GetLength(0) != inputCount || dWeights.GetLength(1) != neuronCount)
                 dWeights = new float[inputCount, neuronCount];
 
@@ -67,34 +66,37 @@ namespace Model.Layers
             if (Dinputs == null || Dinputs.GetLength(0) != batchSize || Dinputs.GetLength(1) != inputCount)
                 Dinputs = new float[batchSize, inputCount];
 
-            // 2. ГРАДІЄНТ ПО ВАГАХ (dW = X^T * dZ)
-            // Паралелимо по входах (inputCount)
+            // (dW = X^T * dZ)
             System.Threading.Tasks.Parallel.For(0, inputCount, i =>
             {
                 for (int j = 0; j < neuronCount; j++)
                 {
                     float sum = 0;
                     for (int s = 0; s < batchSize; s++)
-                    {
                         sum += Inputs[s, i] * dZ[s, j];
-                    }
+
                     dWeights[i, j] = sum / batchSize;
+
+                    if (L2W != 0) dWeights[i, j] += 2f * L2W * Weights[i, j];
+
+                    if (L1W != 0) dWeights[i, j] += L1W * MathF.Sign(Weights[i, j]);
                 }
             });
 
-            // 3. ГРАДІЄНТ ПО БІАСАХ (db = sum(dZ))
+            // (db = sum(dZ))
             System.Threading.Tasks.Parallel.For(0, neuronCount, j =>
             {
                 float sum = 0;
                 for (int s = 0; s < batchSize; s++)
-                {
                     sum += dZ[s, j];
-                }
+
                 dBiases[j] = sum / batchSize;
+
+                if (L2B != 0) dBiases[j] += 2f * L2B * Biases[j];
+                if (L1B != 0) dBiases[j] += L1B * MathF.Sign(Biases[j]);
             });
 
-            // 4. ГРАДІЄНТ ПО ВХОДАХ (dX = dZ * W^T)
-            // Оптимізація: читаємо Weights[i, j] послідовно в межах рядка
+            // (dX = dZ * W^T)
             System.Threading.Tasks.Parallel.For(0, batchSize, s =>
             {
                 for (int i = 0; i < inputCount; i++)
@@ -102,7 +104,6 @@ namespace Model.Layers
                     float sum = 0;
                     for (int j = 0; j < neuronCount; j++)
                     {
-                        // Тут j змінюється найшвидше - це краще для кешу
                         sum += dZ[s, j] * Weights[i, j];
                     }
                     Dinputs[s, i] = sum;
