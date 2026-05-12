@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OCR/Debug-EMNIST
+/OCR/Debug-Printed
+/Program/Logs-Printed

@@ -68,14 +68,22 @@ public static class DataAugmentation
             }
     }
 
-    public static void ApplySaltPepper(Bitmap bmp, double intensity = 0.08)
+    public static void ApplySaltPepper(Bitmap bmp, double intensity = 0.005)
     {
         int noisePixels = (int)(bmp.Width * bmp.Height * intensity);
+
         for (int n = 0; n < noisePixels; n++)
         {
             int x = Rng.Next(bmp.Width);
             int y = Rng.Next(bmp.Height);
-            int val = Rng.NextDouble() < 0.5 ? Rng.Next(200, 256) : Rng.Next(0, 60);
+
+            Color current = bmp.GetPixel(x, y);
+
+            if (current.R < 180)
+                continue;
+
+            int val = Rng.NextDouble() < 0.5 ? 255 : 0;
+
             bmp.SetPixel(x, y, Color.FromArgb(val, val, val));
         }
     }
