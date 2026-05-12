@@ -8,12 +8,23 @@ namespace Model
 {
     public static class ModelSaver
     {
-        public static void SaveJson(string filePath, List<Layer> layers)
+        public static void SaveJson(string filePath, List<Layer> layers, string name = "No-Name")
         {
-            var config = new ModelConfig();
+            var config = new ModelConfig
+            {
+                ModelName = name
+            };
 
             foreach (var layer in layers)
             {
+                if (!layer.IsTrainable)
+                    continue;
+
+                var data = new LayerData
+                {
+                    Type = layer.Type
+                };
+
                 if (layer is Layer_Dense dense)
                 {
                     int rows = dense.Weights.GetLength(0);
@@ -27,14 +38,13 @@ namespace Model
                             weightExport[i][j] = dense.Weights[i, j];
                     }
 
-                    config.Layers.Add(new LayerData
-                    {
-                        Rows = rows,
-                        Cols = cols,
-                        Weights = weightExport,
-                        Biases = dense.Biases
-                    });
+                    data.Rows = rows;
+                    data.Cols = cols;
+                    data.Weights = weightExport;
+                    data.Biases = dense.Biases;
                 }
+
+                config.Layers.Add(data);
             }
 
             var options = new JsonSerializerOptions { WriteIndented = true };
@@ -44,50 +54,61 @@ namespace Model
             Console.WriteLine($"Saved in JSON: {filePath}");
         }
 
-        public static List<Layer> LoadJson(string filePath)
+        public static Model LoadJson(string filePath)
         {
             string jsonString = File.ReadAllText(filePath);
             var config = JsonSerializer.Deserialize<ModelConfig>(jsonString);
-            var layers = new List<Layer>();
+
+            var model = new Model();
 
             foreach (var layerData in config.Layers)
             {
-                if (layerData.Type == "DENSE")
+                Layer layer = layerData.Type switch
                 {
-                    var layer = new Layer_Dense(layerData.Rows, layerData.Cols);
+                    "DENSE" => CreateDense(layerData),
+                    "RELU" => new ActivationReLU(),
+                    "SOFTMAX" => new ActivationSoftmax(),
+                    "DROPOUT" => new Layer_Dropout(0f),
+                    _ => throw new Exception($"Unknown layer type: {layerData.Type}")
+                };
 
-                    for (int i = 0; i < layerData.Rows; i++)
-                    {
-                        for (int j = 0; j < layerData.Cols; j++)
-                        {
-                            layer.Weights[i, j] = layerData.Weights[i][j];
-                        }
-                    }
-
-                    Array.Copy(layerData.Biases, layer.Biases, layerData.Cols);
-                    layers.Add(layer);
-                }
+                model.Add(layer);
             }
 
-            return layers;
+            return model;
         }
 
 
         private class LayerData
         {
-            public string Type { get; set; } = "DENSE";
+            public string Type { get; set; }
+
             public int Rows { get; set; }
             public int Cols { get; set; }
+
             public float[][] Weights { get; set; }
             public float[] Biases { get; set; }
         }
 
         private class ModelConfig
         {
-            public string ModelName { get; set; } = "EMNIST_Model";
+            public string ModelName { get; set; } = "No-Name";
             public string CreatedAt { get; set; } = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             public List<LayerData> Layers { get; set; } = new List<LayerData>();
         }
 
+
+        private static Layer_Dense CreateDense(LayerData data)
+        {
+            var layer = new Layer_Dense(data.Rows, data.Cols);
+
+            for (int i = 0; i < data.Rows; i++)
+                for (int j = 0; j < data.Cols; j++)
+                    layer.Weights[i, j] = data.Weights[i][j];
+
+            Array.Copy(data.Biases, layer.Biases, data.Cols);
+
+            return layer;
+        }
     }
 }
