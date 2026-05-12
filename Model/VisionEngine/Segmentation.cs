@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Model
+namespace Model.VisionEngine
 {
     public static class Segmentation
     {
@@ -14,12 +14,14 @@ namespace Model
         {
             using (Bitmap original = new Bitmap(imagePath))
             {
-                return RecognizeTextFromBitmap(original, nn, labels, out _, debugDir);
+                (string text, float[] confidence) = RecognizeTextFromBitmap(original, nn, labels, out _, debugDir);
+                return text;
             }
         }
 
-        public static string RecognizeTextFromBitmap(Bitmap original, Model nn, string labels, out List<Rectangle> boundingBoxes, string debugDir = null)
+        public static (string, float[]) RecognizeTextFromBitmap(Bitmap original, Model nn, string labels, out List<Rectangle> boundingBoxes, string debugDir = null)
         {
+            float[] confidence = new float[labels.Length];
             StringBuilder fullText = new StringBuilder();
             boundingBoxes = new List<Rectangle>();
 
@@ -84,12 +86,13 @@ namespace Model
                                     var input = ImagePreprocessing.GetInputForModel(charBmp);
                                     var output = nn.Forward(input);
                                     int idx = AdditionalMath.GetArgmax(output);
+                                    confidence[idx] += output[0, idx];
                                     char predicted = labels[idx];
                                     fullText.Append(predicted);
 
                                     if (debugDir != null)
                                     {
-                                        SaveDebugImages(charBmp, debugDir, debugIndex, predicted);
+                                        ImageHelper.SaveDebugImages(charBmp, debugDir, debugIndex, predicted);
                                         debugIndex++;
                                     }
                                 }
@@ -105,7 +108,7 @@ namespace Model
                     }
                 }
             }
-            return fullText.ToString().TrimEnd();
+            return (fullText.ToString().TrimEnd(), confidence);
         }
 
 
@@ -208,26 +211,14 @@ namespace Model
 
         static bool IsBlack(Color pixel) => pixel.R < 128;
 
-        static void SaveDebugImages(Bitmap charBmp, string debugDir, int index, char predicted)
-        {
-            string rawPath = Path.Combine(debugDir, $"{index:D4}_raw_pred-{predicted}.png");
-            charBmp.Save(rawPath);
 
-            using (Bitmap processed = ImagePreprocessing.PreprocessImage(charBmp))
-            using (Bitmap bigProcessed = new Bitmap(112, 112))
-            using (Graphics gDbg = Graphics.FromImage(bigProcessed))
-            {
-                gDbg.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                gDbg.DrawImage(processed, 0, 0, 112, 112);
-                string procPath = Path.Combine(debugDir, $"{index:D4}_processed_pred-{predicted}.png");
-                bigProcessed.Save(procPath);
-            }
-        }
 
         public class ConnectedComponent
         {
             public Rectangle Rect;
             public List<Point> Pixels = new List<Point>();
         }
-    }
+
+        }
+    
 }

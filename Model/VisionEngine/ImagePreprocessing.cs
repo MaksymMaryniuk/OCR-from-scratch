@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Model
+namespace Model.VisionEngine
 {
     public static class ImagePreprocessing
     {
-        static Random rand = new Random();
-
 
         public static float[] BitmapToArray(Bitmap bmp)
         {
