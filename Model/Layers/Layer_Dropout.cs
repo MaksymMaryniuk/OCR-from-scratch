@@ -6,6 +6,8 @@ namespace Model.Layers
 {
     public class Layer_Dropout : Layer
     {
+        public override bool IsTrainable => false;
+        public override string Type => "DROPOUT";
         public float Rate { get; set; }
         public float KeepRate { get; set; }
         public float[,] Mask { get; set; }

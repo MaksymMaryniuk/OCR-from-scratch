@@ -6,6 +6,8 @@ namespace Model.Layers
 {
     public class ActivationReLU : Layer
     {
+        public override string Type => "RELU";
+        public override bool IsTrainable => true;
         public override void Forward(float[,] inputs) 
         {
             Inputs = inputs;

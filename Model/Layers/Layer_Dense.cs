@@ -6,6 +6,8 @@ namespace Model.Layers
 {
     public class Layer_Dense : Layer
     {
+        public override string Type => "DENSE";
+        public override bool IsTrainable => true;
         public float[,] Weights { get; set; }
         public float[] Biases { get; set; }
         public float[,] dWeights { get; set; }

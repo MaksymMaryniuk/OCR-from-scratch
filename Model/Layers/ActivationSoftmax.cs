@@ -6,6 +6,8 @@ namespace Model.Layers
 {
     public class ActivationSoftmax : Layer
     {
+        public override string Type => "SOFTMAX";
+        public override bool IsTrainable => true;
         public override void Forward(float[,] inputs)
         {
             int rows = inputs.GetLength(0);
