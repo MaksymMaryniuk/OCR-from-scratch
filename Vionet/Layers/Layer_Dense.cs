@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Layers
+namespace Vionet.Layers
 {
     public class Layer_Dense : Layer
     {
         public override string Type => "DENSE";
         public override bool IsTrainable => true;
-        public float[,] Weights { get; set; }
-        public float[] Biases { get; set; }
-        public float[,] dWeights { get; set; }
-        public float[] dBiases { get; set; }
-        public float[,] WeightMomentums { get; set; }
-        public float[] BiasMomentums { get; set; }
-        public float[,] WeightCache { get; set; }
-        public float[] BiasCache { get; set; }
-        public float L1W { get; set; }
-        public float L2W { get; set; }
-        public float L1B { get; set; }
-        public float L2B { get; set; }
+        public float[,] Weights { get; private set; }
+        public float[] Biases { get; private set; }
+        internal float[,] dWeights { get; set; }
+        internal float[] dBiases { get; set; }
+        internal float[,] WeightMomentums { get; set; }
+        internal float[] BiasMomentums { get; set; }
+        internal float[,] WeightCache { get; set; }
+        internal float[] BiasCache { get; set; }
+        public float L1W { get; private set; }
+        public float L2W { get; private set; }
+        public float L1B { get; private set; }
+        public float L2B { get; private set; }
 
 
         public Layer_Dense(int num_inputs, int num_neurons, float l1w = 0.0F, float l2w = 0.0F, float l1b = 0.0F, float l2b = 0.0F)
@@ -38,7 +38,7 @@ namespace Model.Layers
             AdditionalMath.Matrix_filler(Weights);
             AdditionalMath.Vector_filler(Biases);
         }
-        public override void Forward(float[,] X)
+        internal override void Forward(float[,] X)
         {
             Output = new float[X.GetLength(0), Weights.GetLength(1)];
             Inputs = X;
@@ -53,7 +53,7 @@ namespace Model.Layers
             }
         }
 
-        public override void Backward(float[,] dZ)
+        internal override void Backward(float[,] dZ)
         {
             int batchSize = dZ.GetLength(0);
             int inputCount = Inputs.GetLength(1);
@@ -114,7 +114,7 @@ namespace Model.Layers
         }
 
 
-        public void ZeroGrad()
+        internal void ZeroGrad()
         {
             if (Weights == null || Biases == null)
                 return;

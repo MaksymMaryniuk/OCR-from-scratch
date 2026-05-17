@@ -1,9 +1,9 @@
-﻿using Model.Layers;
+﻿using Vionet.Layers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model
+namespace Vionet
 {
     public abstract class Loss
     {

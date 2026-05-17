@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Layers
+namespace Vionet.Layers
 {
     public class ActivationReLU : Layer
     {
         public override string Type => "RELU";
         public override bool IsTrainable => true;
-        public override void Forward(float[,] inputs) 
+        internal override void Forward(float[,] inputs) 
         {
             Inputs = inputs;
             Output = new float[inputs.GetLength(0), inputs.GetLength(1)];
@@ -20,7 +20,7 @@ namespace Model.Layers
                 }
             }
         }
-        public override void Backward(float[,] dA)
+        internal override void Backward(float[,] dA)
         {
             // operations: dZ = dA * (Z > 0)
             // where dA - grad due to previous layer (or from derivitave loss to respect of ), Z - input to ReLU

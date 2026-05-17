@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualBasic;
-using Model.Layers;
+using Vionet.Layers;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Optimizers
+namespace Vionet.Optimizers
 {
     public class Optimizer_AdaGrad : AdaptiveOptimizer
     {

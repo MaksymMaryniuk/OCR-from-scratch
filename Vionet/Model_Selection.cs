@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model
+namespace Vionet
 {
     public class ModelSelection
     {
@@ -80,7 +80,7 @@ namespace Model
                         anyWeak = true;
                     }
                 }
-                if (!anyWeak) Console.WriteLine("  All classes above threshold.");
+                if (!anyWeak) Console.WriteLine("All classes above threshold.");
             }
 
             return accuracy;

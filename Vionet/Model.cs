@@ -1,5 +1,5 @@
-﻿using Model.Layers;
-using Model.Optimizers;
+﻿using Vionet.Layers;
+using Vionet.Optimizers;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Model
+namespace Vionet
 {
     public class Model
     {

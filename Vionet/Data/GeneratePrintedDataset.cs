@@ -1,9 +1,9 @@
-﻿using Model.VisionEngine;
+﻿using Vionet.VisionEngine;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 
-namespace Model.Data;
+namespace Vionet.Data;
 
 public static class DatasetGenerator
 {
@@ -44,6 +44,7 @@ public static class DatasetGenerator
                             g.Clear(Color.White);
 
                             Font currentFont = fonts[rand.Next(fonts.Length)];
+
                             float x = 10 + (aug.UseShift ? rand.Next(-aug.MaxShift, aug.MaxShift + 1) : 0);
                             float y = 10 + (aug.UseShift ? rand.Next(-aug.MaxShift, aug.MaxShift + 1) : 0);
 
@@ -57,15 +58,12 @@ public static class DatasetGenerator
 
                             using (Bitmap processed = ImagePreprocessing.PreprocessImage(tempBmp))
                             {
-                                // 2. Тепер, коли буква вже зафіксована у квадраті 28x28, додаємо шум
                                 if (aug.UseSaltPepper)
                                     DataAugmentation.ApplySaltPepper(processed, aug.SaltPepperIntensity);
 
-                                // 3. Також шум краще накладати ПІСЛЯ блюру, якщо він є
                                 if (aug.UseBlur)
                                     DataAugmentation.ApplyBlur(processed, aug.BlurChance);
 
-                                // 4. Перетворюємо вже "шумні" 28x28 пікселів у масив
                                 float[] pixels = ImagePreprocessing.BitmapToArray(processed);
                                 for (int p = 0; p < 784; p++)
                                     resX[sampleIndex, p] = pixels[p];

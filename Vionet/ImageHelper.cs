@@ -1,11 +1,11 @@
-﻿using Model.VisionEngine;
+﻿using Vionet.VisionEngine;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Text;
 
-namespace Model
+namespace Vionet
 {
     public static class ImageHelper
     {
@@ -57,7 +57,8 @@ namespace Model
 
         static public void SaveDebugImages(Bitmap charBmp, string debugDir, int index, char predicted)
         {
-            string rawPath = Path.Combine(debugDir, $"{index:D4}_raw_pred-{predicted}.png");
+
+            string rawPath = Path.Combine(debugDir, $"{index:D4}_raw_pred-{(int)predicted}.png");
             charBmp.Save(rawPath);
 
             using (Bitmap processed = ImagePreprocessing.PreprocessImage(charBmp))
@@ -66,7 +67,7 @@ namespace Model
             {
                 gDbg.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
                 gDbg.DrawImage(processed, 0, 0, 112, 112);
-                string procPath = Path.Combine(debugDir, $"{index:D4}_processed_pred-{predicted}.png");
+                string procPath = Path.Combine(debugDir, $"{index:D4}_processed_pred-{(int)predicted}.png");
                 bigProcessed.Save(procPath);
             }
         }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Model.VisionEngine
+namespace Vionet.VisionEngine
 {
     public static class ImagePreprocessing
     {
@@ -17,6 +17,27 @@ namespace Model.VisionEngine
                     data[y * bmp.Width + x] = 1.0F - (bmp.GetPixel(x, y).R / 255.0F);
                 }
             return data;
+        }
+
+        public static Bitmap ArrayToBitmap(float[] pixels, int width, int height)
+        {
+            Bitmap bmp = new Bitmap(width, height);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    float val = pixels[y * width + x];
+
+                    int colorVal = 255 - (int)(val * 255);
+
+                    colorVal = Math.Clamp(colorVal, 0, 255);
+
+                    Color c = Color.FromArgb(colorVal, colorVal, colorVal);
+                    bmp.SetPixel(x, y, c);
+                }
+            }
+            return bmp;
         }
 
         public static float[,] GetInputForModel(Bitmap charBmp)

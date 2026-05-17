@@ -1,10 +1,10 @@
-﻿using Model.Layers;
+﻿using Vionet.Layers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Model.Optimizers
+namespace Vionet.Optimizers
 {
     public abstract class Optimizer
     {

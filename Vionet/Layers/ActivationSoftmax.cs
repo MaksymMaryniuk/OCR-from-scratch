@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Model.Layers
+namespace Vionet.Layers
 {
     public class ActivationSoftmax : Layer
     {
         public override string Type => "SOFTMAX";
         public override bool IsTrainable => true;
-        public override void Forward(float[,] inputs)
+        internal override void Forward(float[,] inputs)
         {
             int rows = inputs.GetLength(0);
             int cols = inputs.GetLength(1);
@@ -32,7 +32,7 @@ namespace Model.Layers
                 }
             }
         }
-        public override void Backward(float[,] y_true)
+        internal override void Backward(float[,] y_true)
         {
             Dinputs = new float[Output.GetLength(0), Output.GetLength(1)];
 

@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Model.Layers.ActivationReLU">
+    <Position X="17.25" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAQAAAAAAAAI=</HashCode>
+      <FileName>Layers\ActivationReLU.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Layers.ActivationSoftmax">
+    <Position X="19.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAQAAAAAAAAI=</HashCode>
+      <FileName>Layers\ActivationSoftmax.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Layers.Layer_Dense">
+    <Position X="22" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQIAgECAAAAAAAAEQAAAABAAAAAgAAgAAUAAABAAAAI=</HashCode>
+      <FileName>Layers\Layer_Dense.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Layers.Layer_Dropout">
+    <Position X="24.5" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAICAAAAAAAAAAAEAAAAAAAAgAAAAAQAAAAAAAQI=</HashCode>
+      <FileName>Layers\Layer_Dropout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Layer">
+    <Position X="22" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAIAAAAEAAiAAAAAQAAAAAAAAI=</HashCode>
+      <FileName>Layers\Layer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.AdditionalMath">
+    <Position X="23.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAgAAgAQAAABAAAAAABAAAAEAAgAAAA=</HashCode>
+      <FileName>AdditionalMath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Loss">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Loss.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.LossCCE">
+    <Position X="10" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>LossCCE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Model" Collapsed="true">
+    <Position X="19.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CANgAACUIACAAAEAAAQgAEAAAAAAAAAEAAEAAAAAEAI=</HashCode>
+      <FileName>Model.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Optimizers.AdaptiveOptimizer">
+    <Position X="12.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Optimizers\AdaptiveOptimizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Optimizers.Optimizer">
+    <Position X="12.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAADAAEAAAAAABAAAAAAAAAAAAAAAAAACEAAAA=</HashCode>
+      <FileName>Optimizers\Optimizer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Optimizers.Optimizer_AdaGrad">
+    <Position X="10" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Optimizers\Optimizer_AdaGrad.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Optimizers.Optimizer_Adam">
+    <Position X="12.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
+      <FileName>Optimizers\Optimizer_Adam.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Optimizers.Optimizer_RMSProp">
+    <Position X="14.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
+      <FileName>Optimizers\Optimizer_RMSProp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Optimizers.Optimizer_SGD">
+    <Position X="9.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Optimizers\Optimizer_SGD.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.DatasetGenerator">
+    <Position X="17.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>GeneratePrintedDataset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.ImageHelper">
+    <Position X="15.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>ImageHelper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.ImagePreprocessing">
+    <Position X="15.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAAGEIAAAAQAAAAAAABAAQAAABIAAgAAAIAAA=</HashCode>
+      <FileName>ImagePreprocessing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.ModelSaver">
+    <Position X="21.5" Y="1" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Model.ModelSaver.LayerData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModelSaver.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Model.ModelSaver.ModelConfig" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ModelSaver.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ModelSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Model.Segmentation">
+    <Position X="17.5" Y="3" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Model.Segmentation.ConnectedComponent" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Segmentation.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAQAAAAAAAAAQAAAAAAAAAgAIgAAAQAAAAAA=</HashCode>
+      <FileName>Segmentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

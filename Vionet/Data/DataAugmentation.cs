@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Vionet.VisionEngine;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Model.Data;
+namespace Vionet.Data;
 
 public static class DataAugmentation
 {
@@ -114,6 +115,41 @@ public static class DataAugmentation
             for (int j = 0; j < arr.GetLength(1); j++)
                 arr[i, j] = Math.Clamp(
                     arr[i, j] + (float)((Rng.NextDouble() * 2 - 1) * noiseLevel), 0f, 1f);
+    }
+
+    public static void ApplyAugmentation(Bitmap bmp, AugmentationConfig aug)
+    {
+
+        if (aug.UseBrightness)
+            ApplyBrightness(bmp, aug.BrightnessRange);
+
+        if (aug.UseSaltPepper)
+            ApplySaltPepper(bmp, aug.SaltPepperIntensity);
+
+        if (aug.UseBlur)
+            ApplyBlur(bmp, aug.BlurChance);
+    }
+    public static float[,] AugmentExistingDataset(float[,] X, AugmentationConfig aug)
+    {
+        int samples = X.GetLength(0);
+        float[,] augmentedX = new float[samples, 784];
+
+        for (int i = 0; i < samples; i++)
+        {
+            float[] sample = new float[784];
+            for (int p = 0; p < 784; p++) sample[p] = X[i, p];
+
+            using (Bitmap bmp = ImagePreprocessing.ArrayToBitmap(sample, 28, 28))
+            {
+                DataAugmentation.ApplyAugmentation(bmp, aug);
+
+                float[] processedPixels = ImagePreprocessing.BitmapToArray(bmp);
+                for (int p = 0; p < 784; p++)
+                    augmentedX[i, p] = processedPixels[p];
+            }
+        }
+
+        return augmentedX;
     }
 }
 public class AugmentationConfig
