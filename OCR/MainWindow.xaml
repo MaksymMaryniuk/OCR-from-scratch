@@ -3,6 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="OCR App" Height="500" Width="800">
 
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+
+
+
+
     <Grid>
         <Grid x:Name="MainMenu">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
@@ -20,22 +28,88 @@
 
             <Button Content="Назад" Click="Back_Click" Margin="10"/>
 
-            <Border Grid.Row="1" BorderBrush="Gray" BorderThickness="1" Margin="10">
-                <Image x:Name="LoadedImage" Stretch="Uniform"/>
-            </Border>
+            <Border Grid.Row="1"
+        BorderBrush="Gray"
+        BorderThickness="1"
+        Margin="10">
 
+                <Grid x:Name="ImageDropZone"
+          AllowDrop="True"
+          Drop="ImageDropZone_Drop"
+          DragEnter="ImageDropZone_DragEnter"
+          DragLeave="ImageDropZone_DragLeave"
+          Background="Transparent">
+
+                    <Image x:Name="LoadedImage"
+               Stretch="Uniform"/>
+
+                    <TextBlock x:Name="DropHint"
+                   Text="Перетягніть зображення сюди"
+                   FontSize="22"
+                   Foreground="Gray"
+                   Opacity="0.6"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"
+                   IsHitTestVisible="False"/>
+
+                </Grid>
+
+            </Border>
             <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10">
                 <Button Content="Вибрати зображення" Click="LoadImage_Click" Margin="0,5"/>
 
                 <StackPanel Orientation="Horizontal" Margin="0,5">
-                    <CheckBox x:Name="SaveImagesCheck" Content="Зберігати знайдені фото" VerticalAlignment="Center"/>
-                    <TextBlock x:Name="ImageStatusText" Margin="15,0,0,0" Foreground="Blue" VerticalAlignment="Center"/>
+                    <TextBlock Text="Мова розпізнавання:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    <ComboBox x:Name="LanguageSelector" Width="100" SelectedIndex="0">
+                        <ComboBoxItem Content="English"/>
+                        <ComboBoxItem Content="Ukrainian"/>
+                    </ComboBox>
                 </StackPanel>
 
-                <Button Content="Знайти текст" Click="Recognize_Click" Margin="0,5"/>
-                <TextBox x:Name="ResultText" Height="100" TextWrapping="Wrap"/>
+                <Button Content="Класифікувати" Click="Recognize_Click" Margin="0,5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,5" VerticalAlignment="Center">
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,15,0">
+                        <Border Width="16" Height="16" Background="#64B5F6"
+                BorderBrush="Black" BorderThickness="1" Margin="0,0,5,0"/>
+                        <TextBlock Text="Картинка" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,15,0">
+                        <Border Width="16" Height="16" Background="#81C784"
+                BorderBrush="Black" BorderThickness="1" Margin="0,0,5,0"/>
+                        <TextBlock Text="Текст" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="16" Height="16" Background="#FFB74D"
+                BorderBrush="Black" BorderThickness="1" Margin="0,0,5,0"/>
+                        <TextBlock Text="Формула" VerticalAlignment="Center"/>
+                    </StackPanel>
+
+                </StackPanel>
+                <TextBox x:Name="ResultText" Height="100" TextWrapping="Wrap" Margin="0,5"/>
+
+                <UniformGrid Columns="2" Margin="0,5">
+                    <Button x:Name="SaveTxtButton" 
+            Content="Зберегти .txt" 
+            Click="SaveToFile_Click" 
+            Margin="0,0,5,0"
+            Background="#E1F5FE" Height="30"/>
+
+                    <Button x:Name="SaveImageButton" 
+        Content="Зберегти картинки" 
+        Click="SaveImages_Click" 
+        Margin="5,0,0,0"
+        Background="#E8F5E9" Height="30"/>
+                </UniformGrid>
+
             </StackPanel>
         </Grid>
+
+
+
+
 
         <Grid x:Name="TestView" Visibility="Collapsed">
             <Grid.RowDefinitions>
@@ -53,43 +127,47 @@
                         MouseUp="Canvas_MouseUp"/>
             </Border>
 
-            <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="10">
-                <Button Content="Розпізнати" Click="RecognizeDraw_Click" Margin="5"/>
-                <Button Content="Очистити" Click="ClearCanvas_Click" Margin="5"/>
-                <TextBox x:Name="DrawResult" Width="300" Margin="5"/>
+            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="10">
 
-                <CheckBox x:Name="ShowSegmentationCheck" Content="Показати сегментацію" Margin="10,0"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="Розпізнати" Click="RecognizeDraw_Click" Margin="5"/>
+                    <Button Content="Очистити" Click="ClearCanvas_Click" Margin="5"/>
+                    <TextBox x:Name="DrawResult" Width="300" Margin="5"/>
+                    <CheckBox x:Name="ShowConfidenceCheck" Content="Показувати впевненість" Margin="5" VerticalAlignment="Center"/>
+                    <CheckBox x:Name="ShowSegmentationCheck" Content="Показати сегментацію" Margin="10,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Height="150" Margin="5,5,5,0">
+                    <ItemsControl x:Name="ConfidenceList">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="2">
+                                    <Border BorderThickness="1" BorderBrush="LightGray" CornerRadius="2" Background="#F5F5F5">
+                                        <TextBlock Text="{Binding Symbol}" FontSize="22" FontWeight="Bold"
+                                       Padding="5,2" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <TextBlock Text="{Binding Confidence, StringFormat={}{0:P0}}"
+                                   FontSize="9" HorizontalAlignment="Center"
+                                   Foreground="{Binding ConfidenceBrush}"
+                                   Visibility="{Binding ElementName=ShowConfidenceCheck, Path=IsChecked,
+                                               Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
 
             </StackPanel>
 
-            
 
 
 
 
-
-            <Grid x:Name="TestPanel" Visibility="Collapsed">
-                <StackPanel>
-
-                    <Border BorderBrush="Black" BorderThickness="1">
-                        <Image x:Name="DrawImage"
-                   Width="600"
-                   Height="280"
-                   MouseMove="DrawImage_MouseMove"
-                   MouseDown="DrawImage_MouseDown"/>
-                    </Border>
-
-                    <StackPanel Orientation="Horizontal">
-                        <Button Content="Знайти текст" Click="RecognizeDraw_Click"/>
-                        <Button Content="Очистити" Click="ClearCanvas_Click"/>
-                    </StackPanel>
-
-                    <TextBlock x:Name="ResultTextImage"/>
-
-                </StackPanel>
-                
-                
-            </Grid>
         </Grid>
 
     </Grid>
