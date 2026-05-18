@@ -15,7 +15,7 @@ namespace Vionet
         private int[] _yBatchBuffer;
         public float AverageAccuracy { get; set; }
 
-        public List<Layer> Layers { get; set; }
+        public List<Layer> Layers { get; private set; }
         public Optimizer Optimizer { get; set; }
         public Loss Loss { get; set; }
 
@@ -81,7 +81,14 @@ namespace Vionet
 
                     // --- Loss ---
                     float lossValue = Loss.Calculate(output, y_batch);
-                    epochLoss += lossValue;
+
+                    float regularizationLoss = 0;
+                    foreach (var layer in Layers)
+                    {
+                        regularizationLoss += Loss.Regularization_Loss(layer);
+                    }
+
+                    epochLoss += lossValue + regularizationLoss;
                     batches++;
 
                     // --- Backward & Update ---
@@ -159,6 +166,64 @@ namespace Vionet
                 Console.WriteLine($"Епоха {epoch}/{epochs} — Loss: {avgLoss:F4}, Accuracy: {AverageAccuracy:F4}");
             }
         }
+
+
+        public void Train(float[,] X, int[] y, int epochs, int batchSize, Action<int, float, float> onEpochEnd = null)
+        {
+            int samples = X.GetLength(0);
+            int[] indices = Enumerable.Range(0, samples).ToArray();
+            Random rng = new Random();
+
+            _xBatchBuffer = new float[batchSize, X.GetLength(1)];
+            _yBatchBuffer = new int[batchSize];
+
+            for (int epoch = 1; epoch <= epochs; epoch++)
+            {
+                Shuffle(indices, rng);
+                float totalLoss = 0;
+                int batchCount = 0;
+                float epochAccuracy = 0;
+
+                for (int i = 0; i < samples; i += batchSize)
+                {
+                    int currentBatchSize = Math.Min(batchSize, samples - i);
+
+
+                    PrepareBatch(X, indices, i, currentBatchSize, X.GetLength(1), y);
+
+                    // --- Forward ---
+                    float[,] output = Forward(_xBatchBuffer);
+
+                    // --- Accuracy for batch ---
+                    float batchAccuracy = PrintAccuracy(output, _yBatchBuffer);
+                    epochAccuracy += batchAccuracy;
+
+                    totalLoss += Loss.Calculate(output, _yBatchBuffer);
+
+
+
+                    // --- Backward & Update ---
+                    foreach (var layer in Layers) if (layer is Layer_Dense d) d.ZeroGrad();
+
+                    float[,] dOutput = Loss.Backward(output, _yBatchBuffer);
+                    Backward(dOutput);
+
+
+                    Optimizer.PreUpdate();
+                    foreach (var layer in Layers) if (layer is Layer_Dense d) Optimizer.Update(d);
+                    Optimizer.PostUpdate();
+
+                    batchCount++;
+
+
+                }
+                float avgLoss = totalLoss / batchCount;
+                AverageAccuracy = epochAccuracy / batchCount;
+                onEpochEnd?.Invoke(epoch, avgLoss, AverageAccuracy);
+            }
+        }
+
+
 
         private void PrepareBatch(float[,] X, int[] indices, int start, int batchSize, int features, int[] y)
         {

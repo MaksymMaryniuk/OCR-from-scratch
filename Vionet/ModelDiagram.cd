@@ -1,140 +1,206 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Model.Layers.ActivationReLU">
-    <Position X="17.25" Y="9.5" Width="1.5" />
+  <Comment CommentText="Computer Vision Part">
+    <Position X="30.008" Y="0.673" Height="0.384" Width="8.099" />
+  </Comment>
+  <Comment CommentText="Neural Network Creating and Saving Part">
+    <Position X="15.937" Y="0.673" Height="0.384" Width="13.034" />
+  </Comment>
+  <Class Name="Vionet.Data.DataAugmentation">
+    <Position X="32.75" Y="7.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAgAAAgACAgAAAAAAAAAgAAAAAAAEAAAEgBAA=</HashCode>
+      <FileName>Data\DataAugmentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.Data.AugmentationConfig">
+    <Position X="35.5" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACACAQAAAAACAAAAAAAIQQAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\DataAugmentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.Data.DatasetGenerator">
+    <Position X="22.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Data\GeneratePrintedDataset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.Layers.ActivationReLU">
+    <Position X="21.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAQAAAAAAAAI=</HashCode>
       <FileName>Layers\ActivationReLU.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Layers.ActivationSoftmax">
-    <Position X="19.5" Y="9.5" Width="1.5" />
+  <Class Name="Vionet.Layers.ActivationSoftmax">
+    <Position X="24" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAgAAAAAQAAAAAAAAI=</HashCode>
       <FileName>Layers\ActivationSoftmax.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Layers.Layer_Dense">
-    <Position X="22" Y="9.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AQIAgECAAAAAAAAEQAAAABAAAAAgAAgAAUAAABAAAAI=</HashCode>
-      <FileName>Layers\Layer_Dense.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model.Layers.Layer_Dropout">
-    <Position X="24.5" Y="9.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>QAAAAICAAAAAAAAAAAEAAAAAAAAgAAAAAQAAAAAAAQI=</HashCode>
-      <FileName>Layers\Layer_Dropout.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model.Layer">
-    <Position X="22" Y="5.25" Width="1.5" />
+  <Class Name="Vionet.Layers.Layer">
+    <Position X="20.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAAAAAAIAAAAEAAiAAAAAQAAAAAAAAI=</HashCode>
       <FileName>Layers\Layer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.AdditionalMath">
-    <Position X="23.75" Y="1" Width="1.5" />
+  <Class Name="Vionet.Layers.Layer_Dense">
+    <Position X="17.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAgAAgAQAAABAAAAAABAAAAEAAgAAAA=</HashCode>
-      <FileName>AdditionalMath.cs</FileName>
+      <HashCode>AQIAgECAAAAAAAAEQAAAABAAAAAgAAgAAUAAABAAAAI=</HashCode>
+      <FileName>Layers\Layer_Dense.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Loss">
-    <Position X="10" Y="0.5" Width="1.5" />
+  <Class Name="Vionet.Layers.Layer_Dropout">
+    <Position X="19.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>Loss.cs</FileName>
+      <HashCode>QAAAAICAAAAAAAAAAAEAAAAAAAAgAAAAAQAAAAAAAQI=</HashCode>
+      <FileName>Layers\Layer_Dropout.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.LossCCE">
-    <Position X="10" Y="3.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>BAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
-      <FileName>LossCCE.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model.Model" Collapsed="true">
-    <Position X="19.5" Y="1" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>CANgAACUIACAAAEAAAQgAEAAAAAAAAAEAAEAAAAAEAI=</HashCode>
-      <FileName>Model.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model.Optimizers.AdaptiveOptimizer">
-    <Position X="12.25" Y="7" Width="1.5" />
+  <Class Name="Vionet.Optimizers.AdaptiveOptimizer">
+    <Position X="24.75" Y="11.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\AdaptiveOptimizer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Optimizers.Optimizer">
-    <Position X="12.25" Y="2.75" Width="1.5" />
+  <Class Name="Vionet.Optimizers.Optimizer">
+    <Position X="26.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAADAAEAAAAAABAAAAAAAAAAAAAAAAAACEAAAA=</HashCode>
       <FileName>Optimizers\Optimizer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Optimizers.Optimizer_AdaGrad">
-    <Position X="10" Y="10.25" Width="1.5" />
+  <Class Name="Vionet.Optimizers.Optimizer_AdaGrad">
+    <Position X="23" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_AdaGrad.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Optimizers.Optimizer_Adam">
-    <Position X="12.25" Y="10.25" Width="1.5" />
+  <Class Name="Vionet.Optimizers.Optimizer_Adam">
+    <Position X="25" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_Adam.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Optimizers.Optimizer_RMSProp">
-    <Position X="14.75" Y="10.25" Width="1.5" />
+  <Class Name="Vionet.Optimizers.Optimizer_RMSProp">
+    <Position X="27" Y="14.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_RMSProp.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.Optimizers.Optimizer_SGD">
-    <Position X="9.75" Y="7" Width="1.5" />
+  <Class Name="Vionet.Optimizers.Optimizer_SGD">
+    <Position X="28" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_SGD.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.DatasetGenerator">
-    <Position X="17.5" Y="1" Width="1.5" />
+  <Class Name="Vionet.VisionEngine.DocumentLayoutAnalyzer">
+    <Position X="30" Y="1.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Vionet.VisionEngine.DocumentLayoutAnalyzer.RegionType">
+        <TypeIdentifier>
+          <NewMemberFileName>VisionEngine\DocumentLayoutAnalyzer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="Vionet.VisionEngine.DocumentLayoutAnalyzer.DocumentRegion">
+        <TypeIdentifier>
+          <NewMemberFileName>VisionEngine\DocumentLayoutAnalyzer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
-      <FileName>GeneratePrintedDataset.cs</FileName>
+      <HashCode>AAAAAABABAAAAAAAAAAAAAIAIAAAQAQAAAABAEIAAAA=</HashCode>
+      <FileName>VisionEngine\DocumentLayoutAnalyzer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.ImageHelper">
-    <Position X="15.5" Y="1" Width="1.5" />
+  <Class Name="Vionet.VisionEngine.ImagePreprocessing">
+    <Position X="35.75" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAGEIAAgAQAAAAAAABAAQAAABIAAgAAAIAAA=</HashCode>
+      <FileName>VisionEngine\ImagePreprocessing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.VisionEngine.Segmentation">
+    <Position X="32.75" Y="1.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Vionet.VisionEngine.Segmentation.ConnectedComponent">
+        <TypeIdentifier>
+          <NewMemberFileName>VisionEngine\Segmentation.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ACAAIABAAAAAAAAFAAAQAAAARAAAEgIIgABAQAAAAAA=</HashCode>
+      <FileName>VisionEngine\Segmentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.AdditionalMath">
+    <Position X="22.5" Y="10.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAgAAgAQAAABAAAAAABAAAAEAAgAAAA=</HashCode>
+      <FileName>AdditionalMath.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.ImageHelper">
+    <Position X="22.5" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
       <FileName>ImageHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.ImagePreprocessing">
-    <Position X="15.5" Y="3" Width="1.5" />
+  <Class Name="Vionet.Loss">
+    <Position X="16" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAIAAAGEIAAAAQAAAAAAABAAQAAABIAAgAAAIAAA=</HashCode>
-      <FileName>ImagePreprocessing.cs</FileName>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Loss.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Model.ModelSaver">
-    <Position X="21.5" Y="1" Width="1.5" />
+  <Class Name="Vionet.LossCCE">
+    <Position X="16" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>LossCCE.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.Model">
+    <Position X="18" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>CANgAACUIACAAAEAAAQgAEAAAAAAAAAEAAEAAAAAEAI=</HashCode>
+      <FileName>Model.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.ModelSelection">
+    <Position X="22.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Model_Selection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.ModelSaver">
+    <Position X="20.5" Y="1.5" Width="1.5" />
     <NestedTypes>
-      <Class Name="Model.ModelSaver.LayerData" Collapsed="true">
+      <Class Name="Vionet.ModelSaver.LayerData" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModelSaver.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
-      <Class Name="Model.ModelSaver.ModelConfig" Collapsed="true">
+      <Class Name="Vionet.ModelSaver.ModelConfig" Collapsed="true">
         <TypeIdentifier>
           <NewMemberFileName>ModelSaver.cs</NewMemberFileName>
         </TypeIdentifier>
@@ -143,20 +209,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ModelSaver.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Model.Segmentation">
-    <Position X="17.5" Y="3" Width="1.5" />
-    <NestedTypes>
-      <Class Name="Model.Segmentation.ConnectedComponent" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>Segmentation.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAIAAAAQAAAAAAAAAQAAAAAAAAAgAIgAAAQAAAAAA=</HashCode>
-      <FileName>Segmentation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

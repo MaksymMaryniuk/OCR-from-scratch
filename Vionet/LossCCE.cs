@@ -6,7 +6,6 @@ namespace Vionet
 {
     public class LossCCE : Loss
     {
-        public float[] Outputs { get; set; }
 
         public override float[] Forward(float[,] y_pred, float[,] y_true)
         {

@@ -8,7 +8,7 @@ namespace Vionet.Optimizers
 {
     public abstract class Optimizer
     {
-        public float currentLearningRate;
+        public float CurrentLearningRate { get; private set; }
         protected int iteration = 0;
 
         public float LearningRate { get; set; }
@@ -22,7 +22,7 @@ namespace Vionet.Optimizers
         }
         public void PreUpdate()
         {
-            currentLearningRate = LearningRate * (1.0F / (1.0F + DecayRate * iteration));
+            CurrentLearningRate = LearningRate * (1.0F / (1.0F + DecayRate * iteration));
         }
 
         public virtual void Update(Layer_Dense layer)

@@ -22,6 +22,12 @@ namespace Vionet.Layers
         {
             Inputs = inputs;
 
+            if (!IsTraining)
+            {
+                Output = (float[,])inputs.Clone();
+                return;
+            }
+
             _mask = new float[inputs.GetLength(0), inputs.GetLength(1)];
             Output = new float[inputs.GetLength(0), inputs.GetLength(1)];
 

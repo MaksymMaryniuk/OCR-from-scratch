@@ -46,6 +46,8 @@ namespace Vionet
             int[] perClassCorrect = labels != null ? new int[labels.Length] : null;
             int[] perClassTotal = labels != null ? new int[labels.Length] : null;
 
+            foreach (var layer in model.Layers) layer.IsTraining = false;
+
             for (int i = 0; i < total; i++)
             {
                 float[,] input = new float[1, features];
@@ -82,6 +84,8 @@ namespace Vionet
                 }
                 if (!anyWeak) Console.WriteLine("All classes above threshold.");
             }
+
+            foreach (var layer in model.Layers) layer.IsTraining = true;
 
             return accuracy;
         }

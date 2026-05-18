@@ -21,31 +21,32 @@ namespace Vionet.Optimizers
                 {
                     for (int j = 0; j < layer.Weights.GetLength(1); j++)
                     {
-                        layer.WeightMomentums[i, j] = (momentum * layer.WeightMomentums[i, j]) - (currentLearningRate * layer.dWeights[i, j]);
-                        layer.Weights[i, j] += (momentum * layer.WeightMomentums[i, j]) - (currentLearningRate * layer.dWeights[i, j]);
+                        float update = (momentum * layer.WeightMomentums[i, j]) - (CurrentLearningRate * layer.dWeights[i, j]);
+                        layer.WeightMomentums[i, j] = update;
+                        layer.Weights[i, j] += update;
                     }
                 }
 
                 for (int j = 0; j < layer.Biases.Length; j++)
                 {
-                    layer.BiasMomentums[j] = (momentum * layer.BiasMomentums[j]) - (currentLearningRate * layer.dBiases[j]);
-                    layer.Biases[j] += (momentum * layer.BiasMomentums[j]) - (currentLearningRate * layer.dBiases[j]);
+                    float update = (momentum * layer.BiasMomentums[j]) - (CurrentLearningRate * layer.dBiases[j]);
+                    layer.BiasMomentums[j] = update;
+                    layer.Biases[j] += update;
                 }
             }
             else
             {
-                currentLearningRate = LearningRate * (1.0F / (1.0F + DecayRate * iteration));
                 for (int i = 0; i < layer.Weights.GetLength(0); i++)
                 {
                     for (int j = 0; j < layer.Weights.GetLength(1); j++)
                     {
-                        layer.Weights[i, j] -= currentLearningRate * layer.dWeights[i, j];
+                        layer.Weights[i, j] -= CurrentLearningRate * layer.dWeights[i, j];
                     }
                 }
 
                 for (int j = 0; j < layer.Biases.Length; j++)
                 {
-                    layer.Biases[j] -= currentLearningRate * layer.dBiases[j];
+                    layer.Biases[j] -= CurrentLearningRate * layer.dBiases[j];
                 }
             }
         }

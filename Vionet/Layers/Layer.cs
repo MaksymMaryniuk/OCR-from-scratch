@@ -6,6 +6,8 @@ public abstract class Layer
 
     public virtual bool IsTrainable => true;
 
+    public bool IsTraining { get; set; } = true;
+
     public float[,] Inputs { get; protected set; }
     public float[,] Output { get; protected set; }
     public float[,] Dinputs { get; protected set; }

@@ -18,14 +18,18 @@ namespace Vionet.Optimizers
             {
                 for (int j = 0; j < layer.Weights.GetLength(1); j++)
                 {
-                    layer.WeightMomentums[i, j] += MathF.Pow(layer.dWeights[i, j], 2);
-                    layer.Weights[i, j] -= (currentLearningRate * layer.dWeights[i, j]) / (MathF.Sqrt(layer.WeightMomentums[i, j]) + Epsilon);
+                    layer.WeightMomentums[i, j] += layer.dWeights[i, j] * layer.dWeights[i, j];
+
+                    layer.Weights[i, j] -= (CurrentLearningRate * layer.dWeights[i, j]) /
+                                           (MathF.Sqrt(layer.WeightMomentums[i, j]) + Epsilon);
                 }
             }
+
             for (int j = 0; j < layer.Biases.Length; j++)
             {
-                layer.BiasMomentums[j] += MathF.Pow(layer.dBiases[j], 2);
-                layer.Biases[j] -= (currentLearningRate * layer.dBiases[j]) / (MathF.Sqrt(layer.BiasMomentums[j]) + Epsilon);
+                layer.BiasMomentums[j] += layer.dBiases[j] * layer.dBiases[j];
+                layer.Biases[j] -= (CurrentLearningRate * layer.dBiases[j]) /
+                                   (MathF.Sqrt(layer.BiasMomentums[j]) + Epsilon);
             }
         }
     }
