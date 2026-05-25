@@ -162,15 +162,30 @@ namespace OCR
 
         private (Vionet.Model model, string labels) SelectDocumentModel()
         {
+            Vionet.Model selectedModel;
+
             if (DocModelSelector.SelectedIndex > 1)
             {
                 string name = (DocModelSelector.SelectedItem as ComboBoxItem)!.Content.ToString()!;
-                return (_customModels[name], UkrainianLabels);
+                _customModels.TryGetValue(name, out selectedModel);
+            }
+            else
+            {
+                selectedModel = DocModelSelector.SelectedIndex == 1
+                    ? NeuralNetworkEnglish
+                    : NeuralNetworkUkrainian;
             }
 
-            return DocModelSelector.SelectedIndex == 1
-                ? (NeuralNetworkEnglish,   EnglishLabels)
-                : (NeuralNetworkUkrainian, UkrainianLabels);
+            if (selectedModel != null)
+            {
+                string modelLabels = !string.IsNullOrEmpty(selectedModel.Labels)
+                    ? selectedModel.Labels
+                    : EmnistLabels;
+
+                return (selectedModel, modelLabels);
+            }
+
+            return (NeuralNetworkUkrainian, UkrainianLabels);
         }
 
         internal static BitmapSource BitmapToBitmapSource(Bitmap bmp)

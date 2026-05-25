@@ -8,11 +8,12 @@ namespace Vionet
 {
     public static class ModelSaver
     {
-        public static void SaveJson(string filePath, List<Layer> layers, string name = "No-Name")
+        public static void SaveJson(string filePath, List<Layer> layers, string name = "No-Name", string labels = null)
         {
             var config = new ModelConfig
             {
-                ModelName = name
+                ModelName = name,
+                Labels = labels
             };
 
             foreach (var layer in layers)
@@ -61,6 +62,11 @@ namespace Vionet
 
             var model = new Model();
 
+            if (config.Labels != null)
+            {
+                model.Labels = config.Labels;
+            }
+
             foreach (var layerData in config.Layers)
             {
                 Layer layer = layerData.Type switch
@@ -93,6 +99,7 @@ namespace Vionet
         private class ModelConfig
         {
             public string ModelName { get; set; } = "No-Name";
+            public string Labels { get; set; }
             public string CreatedAt { get; set; } = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             public List<LayerData> Layers { get; set; } = new List<LayerData>();
         }

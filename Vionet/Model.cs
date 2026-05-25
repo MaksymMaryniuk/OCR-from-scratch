@@ -16,6 +16,7 @@ namespace Vionet
         public float AverageAccuracy { get; set; }
 
         public List<Layer> Layers { get; private set; }
+        public string Labels { get; set; } = string.Empty;
         public Optimizer Optimizer { get; set; }
         public Loss Loss { get; set; }
 
@@ -65,7 +66,6 @@ namespace Vionet
                     float[,] X_batch = GetBatch(X, indices, i, currentBatchSize, features);
                     int[] y_batch = GetBatchLabels(y, indices, i, currentBatchSize);
 
-                    // --- Forward ---
                     float[,] output = Forward(X_batch);
 
 
@@ -75,11 +75,11 @@ namespace Vionet
                             denseLayer.ZeroGrad();
                     }
 
-                    // --- Accuracy for batch ---
+
                     float batchAccuracy = PrintAccuracy(output, y_batch);
                     epochAccuracy += batchAccuracy;
 
-                    // --- Loss ---
+
                     float lossValue = Loss.Calculate(output, y_batch);
 
                     float regularizationLoss = 0;
@@ -91,7 +91,6 @@ namespace Vionet
                     epochLoss += lossValue + regularizationLoss;
                     batches++;
 
-                    // --- Backward & Update ---
                     float[,] dOutput = Loss.Backward(output, y_batch);
                     Backward(dOutput);
 
@@ -137,18 +136,16 @@ namespace Vionet
 
                     PrepareBatch(X, indices, i, currentBatchSize, X.GetLength(1), y);
 
-                    // --- Forward ---
+
                     float[,] output = Forward(_xBatchBuffer);
 
-                    // --- Accuracy for batch ---
+
                     float batchAccuracy = PrintAccuracy(output, _yBatchBuffer);
                     epochAccuracy += batchAccuracy;
 
                     totalLoss += Loss.Calculate(output, _yBatchBuffer);
 
 
-
-                    // --- Backward & Update ---
                     foreach (var layer in Layers) if (layer is Layer_Dense d) d.ZeroGrad();
 
                     float[,] dOutput = Loss.Backward(output, _yBatchBuffer);
@@ -191,18 +188,14 @@ namespace Vionet
 
                     PrepareBatch(X, indices, i, currentBatchSize, X.GetLength(1), y);
 
-                    // --- Forward ---
                     float[,] output = Forward(_xBatchBuffer);
 
-                    // --- Accuracy for batch ---
                     float batchAccuracy = PrintAccuracy(output, _yBatchBuffer);
                     epochAccuracy += batchAccuracy;
 
                     totalLoss += Loss.Calculate(output, _yBatchBuffer);
 
 
-
-                    // --- Backward & Update ---
                     foreach (var layer in Layers) if (layer is Layer_Dense d) d.ZeroGrad();
 
                     float[,] dOutput = Loss.Backward(output, _yBatchBuffer);

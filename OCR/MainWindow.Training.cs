@@ -82,6 +82,14 @@ namespace OCR
 
             var (expectedOutput, maxSamples, datasetPath, datasetName) = GetDatasetParams();
 
+            customModel.Labels = DatasetSelector.SelectedIndex switch
+            {
+                0 => EmnistLabels,
+                1 => EnglishLabels,
+                2 => UkrainianLabels,
+                _ => EmnistLabels
+            };
+
             if (!int.TryParse(EpochsInput.Text,  out int epochs))       epochs       = 5;
             if (!int.TryParse(SamplesInput.Text, out int samplesCount)) samplesCount = 10000;
             if (samplesCount > maxSamples) samplesCount = maxSamples;
@@ -220,7 +228,7 @@ namespace OCR
                 : ModelNameInput.Text.Trim();
 
 
-            Vionet.ModelSaver.SaveJson($"NeuralNetworks/{modelName}.json", model.Layers, modelName);
+            Vionet.ModelSaver.SaveJson($"NeuralNetworks/{modelName}.json", model.Layers, modelName, model.Labels);
 
             if (!_customModels.ContainsKey(modelName))
             {
