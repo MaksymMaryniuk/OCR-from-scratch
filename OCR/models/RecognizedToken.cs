@@ -11,7 +11,7 @@ namespace OCR.models
             get
             {
                 byte red   = (byte)(255 * (1f - Confidence));
-                byte green = (byte)(255 *        Confidence);
+                byte green = (byte)(255 * Confidence);
                 return new SolidColorBrush(Color.FromRgb(red, green, 0));
             }
         }

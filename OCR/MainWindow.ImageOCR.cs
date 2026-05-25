@@ -165,7 +165,7 @@ namespace OCR
             if (DocModelSelector.SelectedIndex > 1)
             {
                 string name = (DocModelSelector.SelectedItem as ComboBoxItem)!.Content.ToString()!;
-                return (_customModels[name], EmnistLabels);
+                return (_customModels[name], UkrainianLabels);
             }
 
             return DocModelSelector.SelectedIndex == 1

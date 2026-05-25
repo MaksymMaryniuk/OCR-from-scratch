@@ -34,7 +34,6 @@ namespace OCR
             DrawCanvas.Children.Add(dot);
         }
 
-        // ── Очищення ────────────────────────────────────────────────────
 
         private void ClearCanvas_Click(object sender, RoutedEventArgs e)
         {

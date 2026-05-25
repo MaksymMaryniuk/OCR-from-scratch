@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -74,6 +75,7 @@ namespace OCR
         private async void StartTrain_Click(object sender, RoutedEventArgs e)
         {
             ValidateLayerDimensions();
+            var customModel = BuildModelFromUI();
 
             ConsoleLog.Text = "";
             LogToConsole("Ініціалізація процесу навчання...");
@@ -84,12 +86,11 @@ namespace OCR
             if (!int.TryParse(SamplesInput.Text, out int samplesCount)) samplesCount = 10000;
             if (samplesCount > maxSamples) samplesCount = maxSamples;
 
-            var augConfig = GetSelectedAugmentation();
 
+            int datasetIndex = DatasetSelector.SelectedIndex;
             try
             {
-                var customModel = BuildModelFromUI();
-
+                var augConfig = GetSelectedAugmentation();
                 if (!ValidateModelIO(customModel, expectedOutput, datasetName)) return;
 
                 if (customModel.Layers.Count > 0 && customModel.Layers.Last() is not ActivationSoftmax)
@@ -104,7 +105,7 @@ namespace OCR
                 customModel.set(selectedOptimizer, new Vionet.LossCCE());
                 LogToConsole($"Модель для {datasetName} готова. Оптимізатор: {selectedOptimizer.GetType().Name}");
 
-                await Task.Run(() => RunTraining(customModel, datasetName, datasetPath, samplesCount, epochs, augConfig));
+                await Task.Run(() => RunTraining(customModel, datasetName, datasetPath, samplesCount, epochs, augConfig, datasetIndex));
             }
             catch (Exception ex)
             {
@@ -161,16 +162,17 @@ namespace OCR
         private Vionet.Optimizers.Optimizer CreateOptimizer(float lr) =>
             OptChoice.SelectedIndex switch
             {
-                1 => new Vionet.Optimizers.Optimizer_RMSProp(lr),
+                1 => new Vionet.Optimizers.Optimizer_RMSProp(rho: 0.9f, learningRate: lr),
                 2 => new Vionet.Optimizers.Optimizer_SGD(lr),
-                _ => new Vionet.Optimizers.Optimizer_Adam(lr)
+                _ => new Vionet.Optimizers.Optimizer_Adam(learningRate: lr)
             };
 
         private void RunTraining(
             Vionet.Model model,
             string datasetName, string datasetPath,
             int samplesCount, int epochs,
-            AugmentationConfig augConfig)
+            AugmentationConfig augConfig,
+            int datasetIndex)
         {
             void Report(string msg) => Dispatcher.Invoke(() => LogToConsole(msg));
 
@@ -182,7 +184,7 @@ namespace OCR
                 Action<int, float, float> progress = (epoch, loss, acc)
                     => Report($"🔹 Епоха {epoch}: Loss = {loss:F5}, Acc = {acc:F4}");
 
-                switch (DatasetSelector.SelectedIndex)
+                switch (datasetIndex)
                 {
                     case 0:
                         var (rawX, y) = Vionet.Model.LoadEMNIST(datasetPath, samplesCount);
@@ -216,6 +218,7 @@ namespace OCR
             string modelName = string.IsNullOrWhiteSpace(ModelNameInput.Text)
                 ? $"Model_{datasetName}"
                 : ModelNameInput.Text.Trim();
+
 
             Vionet.ModelSaver.SaveJson($"NeuralNetworks/{modelName}.json", model.Layers, modelName);
 
