@@ -7,10 +7,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
 	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	  <ApplicationIcon>letter-v.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="8668568.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="letter-v.ico" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
 {
   "ModelName": "No-Name",
+  "Labels": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;()\"'",
   "CreatedAt": "2026-05-13 00:17:09",
   "Layers": [
     {

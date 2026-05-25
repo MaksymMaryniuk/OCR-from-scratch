@@ -141,6 +141,7 @@ namespace OCR
         private (int expectedOut, int maxSamples, string datasetPath, string datasetName) GetDatasetParams()
             => DatasetSelector.SelectedIndex switch
             {
+                // Cut "Vionet" if published as a NuGet package, and ensure the CSV is included as an embedded resource or copied to output.
                 0 => (47, 112800,
                       Path.Combine(_projectRoot, "Vionet", "Data", "emnist-balanced-train.csv"),
                       "EMNIST"),

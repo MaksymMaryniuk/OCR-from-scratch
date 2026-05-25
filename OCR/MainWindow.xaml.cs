@@ -19,8 +19,13 @@ namespace OCR
         private System.Drawing.Bitmap _lastOriginalBitmap = null;
         private string _loadedImagePath = "";
 
+
         private readonly string _projectRoot =
             Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\"));
+
+        /* Only as a published app.
+        private readonly string _projectRoot = AppDomain.CurrentDomain.BaseDirectory;
+        */
 
         internal readonly string EnglishLabels = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?:;()\"'";
         internal readonly string EmnistLabels = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabdefghnqrt";
