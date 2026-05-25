@@ -7,9 +7,6 @@ namespace Vionet.VisionEngine
 {
     public static class DocumentLayoutAnalyzer
     {
-        // =====================================================================
-        // ТИПИ РЕГІОНІВ
-        // =====================================================================
 
         public enum RegionType { Text, Image, MathFormula }
 
@@ -19,9 +16,6 @@ namespace Vionet.VisionEngine
             public RegionType Type;
         }
 
-        // =====================================================================
-        // ПУБЛІЧНІ МЕТОДИ
-        // =====================================================================
 
         public static List<DocumentRegion> AnalyzeLayout(Bitmap original)
         {
@@ -107,7 +101,6 @@ namespace Vionet.VisionEngine
             Bitmap debugBitmap = new Bitmap(original);
 
             using (Graphics g = Graphics.FromImage(debugBitmap))
-            using (Font font = new Font("Arial", 12f, System.Drawing.FontStyle.Bold))
             {
                 foreach (var region in regions)
                 {
@@ -140,11 +133,6 @@ namespace Vionet.VisionEngine
             }
             return masked;
         }
-
-        // =====================================================================
-        // КЛАСИФІКАЦІЯ БЛОКУ
-        // =====================================================================
-
         static RegionType ClassifyBlock(Bitmap binary, Bitmap gray)
         {
             var components = Segmentation.GetConnectedComponents(binary);
@@ -168,9 +156,6 @@ namespace Vionet.VisionEngine
 
             return RegionType.Text;
         }
-        // =====================================================================
-        // ДЕТЕКЦІЯ МАТЕМАТИЧНИХ ФОРМУЛ
-        // =====================================================================
 
         static bool IsMathFormula(
     List<Segmentation.ConnectedComponent> components,
@@ -178,7 +163,6 @@ namespace Vionet.VisionEngine
         {
             if (components.Count < 2) return false;
 
-            // 1. Риска дробу — широкий і тонкий компонент
             bool hasFractionBar = components.Any(c =>
             {
                 float aspectRatio = (float)c.Rect.Width / Math.Max(1, c.Rect.Height);
@@ -188,27 +172,24 @@ namespace Vionet.VisionEngine
 
                 if (!veryWide || !thin || !spansBlock) return false;
 
-                // ЗМІНА: Перевіряємо, чи компоненти знаходяться СУВОРО над і під рискою (перетин по осі X)
                 bool hasAbove = components.Any(other =>
                     other != c &&
                     other.Rect.Bottom <= c.Rect.Top + 2 &&
-                    !(other.Rect.Right < c.Rect.Left || other.Rect.Left > c.Rect.Right)); // Перевірка перетину по X
+                    !(other.Rect.Right < c.Rect.Left || other.Rect.Left > c.Rect.Right));
 
                 bool hasBelow = components.Any(other =>
                     other != c &&
                     other.Rect.Top >= c.Rect.Bottom - 2 &&
-                    !(other.Rect.Right < c.Rect.Left || other.Rect.Left > c.Rect.Right)); // Перевірка перетину по X
+                    !(other.Rect.Right < c.Rect.Left || other.Rect.Left > c.Rect.Right));
 
                 return hasAbove && hasBelow;
             });
 
-            // 2. Висока вертикальна дисперсія центрів
             var centerYs = components.Select(c => (double)(c.Rect.Y + c.Rect.Height / 2)).ToList();
             double meanY = centerYs.Average();
             double varianceY = centerYs.Average(y => (y - meanY) * (y - meanY));
             bool highVerticalSpread = varianceY > blockHeight * blockHeight * 0.04;
 
-            // 3. Символи на різних вертикальних рівнях (верх/середина/низ)
             int zone = blockHeight / 3;
             bool hasTop = components.Any(c => c.Rect.Y < zone);
             bool hasBottom = components.Any(c => c.Rect.Bottom > blockHeight - zone);
@@ -240,10 +221,6 @@ namespace Vionet.VisionEngine
 
             return score >= 4;
         }
-
-        // =====================================================================
-        // ПРОЕКЦІЇ І ЗЛИТТЯ РЕГІОНІВ
-        // =====================================================================
 
         static int[] GetVerticalProjection(Bitmap bmp, Rectangle rect)
         {

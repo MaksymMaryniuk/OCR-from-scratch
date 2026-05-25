@@ -9,9 +9,6 @@ namespace Vionet.VisionEngine
 {
     public static class Segmentation
     {
-        // =====================================================================
-        // ПУБЛІЧНІ МЕТОДИ РОЗПІЗНАВАННЯ
-        // =====================================================================
 
         public static string RecognizeTextFromPhoto(
             string imagePath, Model nn, string labels, string debugDir = null)
@@ -63,9 +60,6 @@ namespace Vionet.VisionEngine
         
         }
 
-        // =====================================================================
-        // ОБРОБКА ОДНОГО РЯДКА
-        // =====================================================================
 
         static void ProcessLine(
             (int start, int end) line,
@@ -105,10 +99,6 @@ namespace Vionet.VisionEngine
             }
         }
 
-        // =====================================================================
-        // СЕГМЕНТАЦІЯ РЯДКІВ І КОМПОНЕНТІВ
-        // =====================================================================
-
         static IEnumerable<(int start, int end)> GetLineSegments(Bitmap binary)
         {
             var hProjection = GetHorizontalProjection(binary);
@@ -139,10 +129,6 @@ namespace Vionet.VisionEngine
             components = MergeDotComponents(components, lineHeight);
             return components.OrderBy(c => c.Rect.X).ToList();
         }
-
-        // =====================================================================
-        // РОЗПІЗНАВАННЯ СИМВОЛУ
-        // =====================================================================
 
         static void RecognizeComponent(
             ConnectedComponent comp, Bitmap lineGray,
@@ -194,10 +180,6 @@ namespace Vionet.VisionEngine
                 fullText.Append(" ");
         }
 
-        // =====================================================================
-        // CONNECTED COMPONENTS
-        // =====================================================================
-
         public static List<ConnectedComponent> GetConnectedComponents(Bitmap bmp)
         {
             int w = bmp.Width, h = bmp.Height;
@@ -244,10 +226,6 @@ namespace Vionet.VisionEngine
             component.Rect = new Rectangle(minX, minY, maxX - minX + 1, maxY - minY + 1);
             return component;
         }
-
-        // =====================================================================
-        // MERGE / ПРОЕКЦІЇ / ДОПОМІЖНЕ
-        // =====================================================================
 
         static List<ConnectedComponent> MergeDotComponents(
             List<ConnectedComponent> components, int lineHeight)
@@ -328,10 +306,6 @@ namespace Vionet.VisionEngine
 
         static bool IsBlack(Color pixel) => pixel.R < 128;
 
-        // =====================================================================
-        // МОДЕЛІ ДАНИХ
-        // =====================================================================
-
         public class ConnectedComponent
         {
             public Rectangle Rect;
@@ -339,41 +313,34 @@ namespace Vionet.VisionEngine
         }
 
 
-        // =====================================================================
-        // ПОСТОБРОБКА ТЕКСТУ
-        // =====================================================================
 
         private static string ApplySentenceCasing(string input)
         {
             if (string.IsNullOrEmpty(input)) return input;
 
             char[] chars = input.ToCharArray();
-            bool capitalizeNext = true; // Перша літера тексту має бути великою
+            bool capitalizeNext = true;
 
             for (int i = 0; i < chars.Length; i++)
             {
                 char c = chars[i];
 
-                // Якщо це літера (ігнорує цифри, пробіли та пунктуацію)
                 if (char.IsLetter(c))
                 {
                     if (capitalizeNext)
                     {
                         chars[i] = char.ToUpper(c);
-                        capitalizeNext = false; // Вимикаємо прапорець до наступної крапки
+                        capitalizeNext = false;
                     }
                     else
                     {
-                        chars[i] = char.ToLower(c); // Всі інші літери примусово малі
+                        chars[i] = char.ToLower(c);
                     }
                 }
-                // Якщо зустріли кінець речення, наступна літера буде великою
                 else if (c == '.' || c == '!' || c == '?')
                 {
                     capitalizeNext = true;
                 }
-                // Всі інші символи (пробіли, коми, цифри) просто пропускаються 
-                // і залишаються як є, не змінюючи стан capitalizeNext
             }
 
             return new string(chars);

@@ -365,3 +365,6 @@ FodyWeavers.xsd
 /OCR/Debug-Printed
 /Program/Logs-Printed
 /Program/Logs-EMNIST
+/Trainer/Logs-EMNIST
+/Trainer/Logs-Printed
+*.csv

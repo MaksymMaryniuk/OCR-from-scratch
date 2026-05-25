@@ -1,25 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Comment CommentText="Computer Vision Part">
-    <Position X="30.008" Y="0.673" Height="0.384" Width="8.099" />
-  </Comment>
   <Comment CommentText="Neural Network Creating and Saving Part">
-    <Position X="15.937" Y="0.673" Height="0.384" Width="13.034" />
+    <Position X="15.937" Y="0.673" Height="0.384" Width="18.744" />
   </Comment>
-  <Class Name="Vionet.Data.DataAugmentation">
-    <Position X="32.75" Y="7.75" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAIAgAAAgACAgAAAAAAAAAgAAAAAAAEAAAEgBAA=</HashCode>
-      <FileName>Data\DataAugmentation.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Vionet.Data.AugmentationConfig">
-    <Position X="35.5" Y="1.5" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AACACAQAAAAACAAAAAAAIQQAAAAAACAAAAAAAAAAAAA=</HashCode>
-      <FileName>Data\DataAugmentation.cs</FileName>
-    </TypeIdentifier>
-  </Class>
+  <Comment CommentText="Computer Vision Part">
+    <Position X="35.5" Y="0.75" Height="0.384" Width="8.099" />
+  </Comment>
   <Class Name="Vionet.Data.DatasetGenerator">
     <Position X="22.5" Y="5.75" Width="1.5" />
     <TypeIdentifier>
@@ -44,7 +30,7 @@
   <Class Name="Vionet.Layers.Layer">
     <Position X="20.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAACAAAAAAAAAAAAIAAAAEAAiAAAAAQAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAACAAAAAAAAAAAAIAAAAEAAiAAAAASAAAAAAAAI=</HashCode>
       <FileName>Layers\Layer.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -63,95 +49,49 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Vionet.Optimizers.AdaptiveOptimizer">
-    <Position X="24.75" Y="11.5" Width="2" />
+    <Position X="29.5" Y="6" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAASAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\AdaptiveOptimizer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vionet.Optimizers.Optimizer">
-    <Position X="26.5" Y="8" Width="1.5" />
+    <Position X="29.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAADAAEAAAAAABAAAAAAAAAAAAAAAAAACEAAAA=</HashCode>
+      <HashCode>AAQAAAAABAAEAAAAAABAAAAACAAAAAAAAAAAACEAAAA=</HashCode>
       <FileName>Optimizers\Optimizer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vionet.Optimizers.Optimizer_AdaGrad">
-    <Position X="23" Y="14.25" Width="1.5" />
+    <Position X="27.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_AdaGrad.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vionet.Optimizers.Optimizer_Adam">
-    <Position X="25" Y="14.25" Width="1.5" />
+    <Position X="29.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_Adam.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vionet.Optimizers.Optimizer_RMSProp">
-    <Position X="27" Y="14.25" Width="1.5" />
+    <Position X="31.75" Y="8.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_RMSProp.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Vionet.Optimizers.Optimizer_SGD">
-    <Position X="28" Y="11.5" Width="1.5" />
+    <Position X="32.75" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Optimizers\Optimizer_SGD.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Vionet.VisionEngine.DocumentLayoutAnalyzer">
-    <Position X="30" Y="1.5" Width="2.25" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Enum Name="Vionet.VisionEngine.DocumentLayoutAnalyzer.RegionType">
-        <TypeIdentifier>
-          <NewMemberFileName>VisionEngine\DocumentLayoutAnalyzer.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Class Name="Vionet.VisionEngine.DocumentLayoutAnalyzer.DocumentRegion">
-        <TypeIdentifier>
-          <NewMemberFileName>VisionEngine\DocumentLayoutAnalyzer.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>AAAAAABABAAAAAAAAAAAAAIAIAAAQAQAAAABAEIAAAA=</HashCode>
-      <FileName>VisionEngine\DocumentLayoutAnalyzer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Vionet.VisionEngine.ImagePreprocessing">
-    <Position X="35.75" Y="5" Width="1.75" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAAAAGEIAAgAQAAAAAAABAAQAAABIAAgAAAIAAA=</HashCode>
-      <FileName>VisionEngine\ImagePreprocessing.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Vionet.VisionEngine.Segmentation">
-    <Position X="32.75" Y="1.5" Width="2.25" />
-    <Compartments>
-      <Compartment Name="Nested Types" Collapsed="false" />
-    </Compartments>
-    <NestedTypes>
-      <Class Name="Vionet.VisionEngine.Segmentation.ConnectedComponent">
-        <TypeIdentifier>
-          <NewMemberFileName>VisionEngine\Segmentation.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
-    <TypeIdentifier>
-      <HashCode>ACAAIABAAAAAAAAFAAAQAAAARAAAEgIIgABAQAAAAAA=</HashCode>
-      <FileName>VisionEngine\Segmentation.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Vionet.AdditionalMath">
-    <Position X="22.5" Y="10.5" Width="2" />
+    <Position X="26.75" Y="5.25" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAIAAAAAAAAgAAgAQAAABAAAAAABAAAAEAAgAAAA=</HashCode>
       <FileName>AdditionalMath.cs</FileName>
@@ -174,7 +114,7 @@
   <Class Name="Vionet.LossCCE">
     <Position X="16" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <HashCode>AAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>LossCCE.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -209,6 +149,66 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAIAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ModelSaver.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.Data.DataAugmentation">
+    <Position X="24.75" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAgAAAgACAgAAAAAAAAAgAAAAAAAEAAAEgBAA=</HashCode>
+      <FileName>Data\DataAugmentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.Data.AugmentationConfig">
+    <Position X="27.25" Y="1.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACACAQAAAAACAAAAAAAIQQAAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\DataAugmentation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.VisionEngine.DocumentLayoutAnalyzer">
+    <Position X="35.5" Y="1.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Vionet.VisionEngine.DocumentLayoutAnalyzer.RegionType">
+        <TypeIdentifier>
+          <NewMemberFileName>VisionEngine\DocumentLayoutAnalyzer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Class Name="Vionet.VisionEngine.DocumentLayoutAnalyzer.DocumentRegion">
+        <TypeIdentifier>
+          <NewMemberFileName>VisionEngine\DocumentLayoutAnalyzer.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAABABAAAAAAAAAAAAAIAIAAAQAQAAAABAEIAAAA=</HashCode>
+      <FileName>VisionEngine\DocumentLayoutAnalyzer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.VisionEngine.ImagePreprocessing">
+    <Position X="41" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAGEIAAgAQAAAAAAABAAQAAABIAAgAAAIAAA=</HashCode>
+      <FileName>VisionEngine\ImagePreprocessing.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vionet.VisionEngine.Segmentation">
+    <Position X="38.25" Y="1.5" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="Vionet.VisionEngine.Segmentation.ConnectedComponent">
+        <TypeIdentifier>
+          <NewMemberFileName>VisionEngine\Segmentation.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ACAAIABAAAAAAAAFAAAQAAAARAAAEgIIgABAQAAAAAA=</HashCode>
+      <FileName>VisionEngine\Segmentation.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
