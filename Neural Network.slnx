@@ -1,4 +1,5 @@
 <Solution>
-  <Project Path="Model/Model.csproj" Id="4306dbed-de1c-4ac7-9ec7-bdbc1612c934" />
-  <Project Path="Program/Program.csproj" Id="f93ed78e-431e-4a91-a4ac-263ad58dcbd4" />
+  <Project Path="OCR/OCR.csproj" Id="46936d39-7034-436a-8f56-e537f398a637" />
+  <Project Path="Trainer/Trainer.csproj" Id="f93ed78e-431e-4a91-a4ac-263ad58dcbd4" />
+  <Project Path="Vionet/Vionet.csproj" Id="4306dbed-de1c-4ac7-9ec7-bdbc1612c934" />
 </Solution>

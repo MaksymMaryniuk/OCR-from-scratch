@@ -10,26 +10,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="8668568.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Vionet\Vionet.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="8668568.png" />
   </ItemGroup>
 
   <ItemGroup>
     <None Update="NeuralNetworks\model_config_EMNIST.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="NeuralNetworks\model_config_EMNIST.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="NeuralNetworks\model_config_printed.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="NeuralNetworks\model_config_printed2.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="NeuralNetworks\model_config_printed3.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="NeuralNetworks\model_config_printedCyrrilic.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="NeuralNetworks\model_config_printedEnglish.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
