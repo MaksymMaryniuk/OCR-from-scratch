@@ -67,7 +67,41 @@ In the end, you'll have all info about weaak classes (you can choose any treshol
 <img width="1000" height="531" alt="Screenshot_1" src="https://github.com/user-attachments/assets/cf603a1b-f039-46ae-912d-49e6ce53b949" />
 
 ---
+## Segmentation
 
+The first stage involves image decolorization and binarization. The initial matrix is ​​converted to grayscale using the
+ToGrayscale method, after which an adaptive brightness threshold is determined using the
+Otsu method (GetOtsuThreshold) to clearly separate the background from the useful signal in the Threshold method: 
+
+
+<img width="963" height="423" alt="10000_raw_pred-71" src="https://github.com/user-attachments/assets/57d1609a-6d1d-47c2-b93f-8ef4d70746b0" />
+
+__raw page from some book__
+
+<img width="963" height="423" alt="10000_raw_pred-66" src="https://github.com/user-attachments/assets/553c7894-3b5a-4dbb-acd1-e4aaaeb0c255" />
+
+__also this page after Otsu Tresholding__
+
+Now, we can proceed every line by HorizontalProjection. Its a basic counter of every foreground pixel horizonticaally. We can see how it works on this image (taken from the internet):
+
+<img width="893" height="375" alt="зображення" src="https://github.com/user-attachments/assets/4d31799e-0d4d-442b-b77b-6c8f9a1a2144" />
+
+So, up to ths point we have beautiful Black-White image, and besides we pairs of coordinate where every line located (we can see the last proceed line in the example)
+
+<img width="963" height="40" alt="100001_raw_pred-71" src="https://github.com/user-attachments/assets/105da8b2-221b-486a-90fb-c6677cea161a" />
+
+__Gray__
+
+<img width="963" height="40" alt="100001_raw_pred-66" src="https://github.com/user-attachments/assets/ea5dd061-924f-4d19-bea1-ac7222e3d12c" />
+
+__Binary__
+
+Many of you will ask "But how it recognize characters?" 
+**and thats the fun part!**
+
+The first thought, that comes into my mind is to use Vertical Projection method (Similar to Horizontal Projection, this method calculates foreground pixel counts, but vertically). And its indeed a point, for a basic classifier. I made more complex solution due to hard recognize ability of blurry, messy text (as our example with a book page).
+I made a Connected Components algorithm, that use DFS
+---
 ## 🚀 Key Features & Capabilities
 
 * **Hybrid Pipeline Architecture:** Combines classic geometric heuristics for ultra-fast document layout segmentation with an artificial neural network for linear text OCR.
